@@ -1,28 +1,32 @@
 
+/**
+* outer function
+* return {void}
+*/
+function outer() {
+    assert(typeof outer === 'function', "outer() is in scope");
+    assert(typeof a === 'number', "a is in scope");
+    /**@type{number}*/
+    var a = 5;
+    if (a === 5) {
+        /**@type{string}*/
+        var b = 'stringB';
+    }
+    assert(typeof b === 'number', "b is in scope");
 
-function outer(){
-test("|----- OUTER START -----|");
-var a = 'stringA';
-if(a){
-var b = 'stringB';
-}
-test("out of if");
-function inner(){
-	var c = 'stringC';
-	test('inner function');
-}
-test('end inner');
+    /**
+    * outer function
+    * return {void}
+    */
+
+    function inner() {
+        /**@type{string}*/
+        var c = 'stringC';
+    }
+
+    assert(typeof c === 'number', "c is in scope");
 }
 
-function test(description){
-	assert(true,description);
-	assert(typeof outer==='function', "outer() is in scope");
-	assert(typeof inner==='function', "inner() is in scope");
-	assert(typeof a==='number',"a is in scope");
-	assert(typeof b==='number',"b is in scope");
-	assert(typeof c==='number',"c is in scope");
-}
-window.onload = function() {
-test("|----- BEFORE OUTER -----|");
-outer();
+window.onload = function () {
+    outer();
 };

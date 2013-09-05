@@ -1,11 +1,15 @@
+/**
+* assert function
+* @param {boolean} value. Is description true
+* @param {string} desc. Description of test
+*/
 function assert(value, desc) {
-var li = document.createElement("li");
-li.className = value ? "pass" : "fail";
-li.appendChild(document.createTextNode(desc));
-console.log(document.getElementById("results"), li);
-document.getElementById("results").appendChild(li);
+    /**@type{Element}*/var li = document.createElement("li");
+    li.className = value ? "pass" : "fail";
+    li.appendChild(document.createTextNode(desc));
+    document.getElementById("results").appendChild(li);
 }
 window.onload = function() {
-assert(true, "The test suite is running.");
-assert(false, "Fail!");
+    assert(true, "The test suite is running.");
+    assert(false, "Fail!");
 };
