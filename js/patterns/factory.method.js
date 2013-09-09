@@ -59,7 +59,7 @@ function BaseFactory(factorytype) {
     this.sellProducts = function () {
         while (products.length) {
             var product = products.shift();
-            funds += product.price;
+            funds += product.getPrice();
         }
     };
 
@@ -94,23 +94,86 @@ function BaseFactory(factorytype) {
 * @extends {BaseFactory}
 */
 function ChocolateFactory() {
-    //this.prototype = new BaseFactory();
     //BaseFactory.apply(this, arguments);
-    this.createProduct = function () {
+    this.createProduct = function (type) {
+        var product;
         if (this.getEmployeesCount() > 0) {
-            var product = {
-                name: 'chocolate',
-                weigth: '100g',
-                price: 10
-            };
+            switch (type) {
+                case 'chocolate-milk': debugger; product = new ChocolateProduct({ name: 'chocolate-milk', price: 10, weight: 100, taste: 'milk' }); break;
+                case 'chocolate-nut': product = new ChocolateProduct({ name: 'chocolate-nut', price: 10, weight: 100, taste: 'nut' }); break;
+                case 'candies': product = new ChocolateProduct({ name: 'candies', price: 78, weight: 1000, taste: 'nut' }); break;
+                default:
+                case 'chocolate': product = new ChocolateProduct({ name: 'chocolate', price: 10, weight: 100 }); break;
+            }
             self_.addProduct(product);
+            return product;
         }
-        return product;
     };
     var self_ = this;
 }
 
 ChocolateFactory.prototype = new BaseFactory('chocolate');
+
+/**
+* @constructor
+*/
+function FactoryProduct(parameters) {
+    var price = parameters['price'];
+    this.getPrice = function() {
+        return price || 0;
+    };
+
+    var name = parameters['name'];
+    this.getName = function () {
+        return name;
+    };
+}
+
+function ChocolateProduct(parameters) {
+    FactoryProduct.apply(this, arguments);
+    
+    var weight = parameters['weight'];
+    this.getWeigth = function() {
+        return weight;
+    };
+    
+    var taste = parameters['taste'];
+    this.getTaste = function() {
+        return taste;
+    };
+};
+
+function GuitarProduct(parameters) {
+    FactoryProduct.apply(this, arguments);
+    var strings = parseInt(parameters["strings"]);
+    if (strings) {
+        strings = strings > 7 ? 7 : strings < 4 ? 4 : strings;
+    } else {
+        strings = 6;
+    }
+    this.getStringsCount = function () {
+        return strings;
+    };
+};
+
+function ViolinProduct(parameters) {
+    FactoryProduct.apply(this, arguments);
+    var strings = parseInt(parameters["strings"]);
+    if (strings) {
+        strings = strings > 10 ? 10 : strings < 4 ? 4 : strings;
+    } else {
+        strings = 4;
+    }
+
+    this.getStringsCount = function () {
+        return strings;
+    };
+
+    var bow = parameters['bow'];
+    this.getBow = function() {
+        return bow;
+    };
+};
 
 
 /**
@@ -119,22 +182,18 @@ ChocolateFactory.prototype = new BaseFactory('chocolate');
 */
 function MusicInstrumentsFactory() {
     //BaseFactory.apply(this, arguments);
-    this.createProduct = function (strings) {
+    this.createProduct = function (type, strings) {
         if (this.getEmployeesCount() > 0) {
-            strings = parseInt(strings);
-            if (strings) {
-                strings = strings > 7 ? 7 : strings < 4 ? 4 : strings;
-            } else {
-                strings = 6;
-            }
-            var product = {
-                name: 'guitar',
-                strings: strings,
-                price: 200
+            var product;
+            switch (type) {
+                case 'guitar': product = new GuitarProduct({ name: 'guitar', strings: strings, price: 200 }); break;
+                case 'violin': product = new ViolinProduct({ name: 'violin', strings: strings, price: 800 }); break;
+                default:
+                    product = new FactoryProduct({ name: 'drum', price: 1200 });
             };
             self_.addProduct(product);
+            return product;
         }
-        return product;
     };
     var self_ = this;
 }
@@ -182,10 +241,10 @@ window.onload = function () {
     assert(chocolateFactory instanceof ChocolateFactory, 'chocolateFactory instanceof ChocolateFactory');
     assert(chocolateFactory instanceof ChocolateFactory, 'chocolateFactory instanceof BaseFactory');
     assert(chocolateFactory.getEmployeesCount() === 0, 'No employees');
-    assert(chocolateFactory.createProduct(), 'created a product');
+    assert(chocolateFactory.createProduct('chocolate-milk'), 'created a product chocolate-milk');
     chocolateFactory.setEmployeesCount(5);
     assert(chocolateFactory.getEmployeesCount() === 5, '5 employees');
-    assert(chocolateFactory.createProduct(), 'created a product');
+    assert(chocolateFactory.createProduct('candies'), 'created a product');
     chocolateFactory.createProduct();
     assert(chocolateFactory.getProducts().length === 2, '2 products created');
     assert(chocolateFactory.getFunds() === 0, 'No money');
@@ -200,11 +259,11 @@ window.onload = function () {
     assert(musicFactory instanceof MusicInstrumentsFactory, 'musicFactory instanceof MusicInstrumentsFactory');
     musicFactory.setEmployeesCount(2);
     assert(musicFactory.getEmployeesCount() === 2, '2 employees');
-    assert(musicFactory.createProduct(), 'created a product');
-    musicFactory.createProduct();
-    musicFactory.createProduct();
+    assert(musicFactory.createProduct('guitar'), 'created a product');
+    musicFactory.createProduct('violin');
+    musicFactory.createProduct('drum');
     assert(musicFactory.getProducts().length === 3, '2 products created');
     musicFactory.sellProducts();
-    assert(musicFactory.getFunds() > 0, 'Money: ' + chocolateFactory.getFunds());
+    assert(musicFactory.getFunds() > 0, 'Money: ' + musicFactory.getFunds());
     assert(musicFactory.getProducts().length === 0, 'No products left');
 }
