@@ -4,13 +4,13 @@
  * The jquery-encoder is published by OWASP under the MIT license. You should read and accept the
  * LICENSE before you use, modify, and/or redistribute this software.
  */
-(function($) {
+(function ($) {
     var default_immune = {
-        'js'        : [',','.','_',' ']
+        'js': [',', '.', '_', ' ']
     };
 
     var attr_whitelist_classes = {
-        'default': [',','.','-','_',' ']
+        'default': [',', '.', '-', '_', ' ']
     };
 
     var attr_whitelist = {
@@ -19,13 +19,13 @@
     };
 
     var css_whitelist_classes = {
-        'default': ['-',' ','%'],
-        'color': ['#',' ','(',')'],
-        'image': ['(',')',':','/','?','&','-','.','"','=',' ']
+        'default': ['-', ' ', '%'],
+        'color': ['#', ' ', '(', ')'],
+        'image': ['(', ')', ':', '/', '?', '&', '-', '.', '"', '=', ' ']
     };
 
     var css_whitelist = {
-        'background': ['(',')',':','%','/','?','&','-',' ','.','"','=','#'],
+        'background': ['(', ')', ':', '%', '/', '?', '&', '-', ' ', '.', '"', '=', '#'],
         'background-image': css_whitelist_classes['image'],
         'background-color': css_whitelist_classes['color'],
         'border-color': css_whitelist_classes['color'],
@@ -44,12 +44,12 @@
     var unsafeKeys = {
         // Style and JS Event attributes should be set through the appropriate methods encodeForCSS, encodeForURL, or
         // encodeForJavascript
-        'attr_name' : ['on[a-z]{1,}', 'style', 'href', 'src'],
+        'attr_name': ['on[a-z]{1,}', 'style', 'href', 'src'],
         // Allowing Javascript url's in untrusted data is a bad idea.
-        'attr_val'  : ['javascript:'],
+        'attr_val': ['javascript:'],
         // These css keys and values are considered to be unsafe to pass in untrusted data into.
-        'css_key'   : ['behavior', '-moz-behavior', '-ms-behavior'],
-        'css_val'   : ['expression']
+        'css_key': ['behavior', '-moz-behavior', '-ms-behavior'],
+        'css_val': ['expression']
     };
 
     var options = {
@@ -80,19 +80,19 @@
          *
          * @param opts
          */
-        init: function(opts) {
-            if ( hasBeenInitialized )
+        init: function (opts) {
+            if (hasBeenInitialized)
                 throw "jQuery Encoder has already been initialized - cannot set options after initialization";
 
             hasBeenInitialized = true;
-            $.extend( options, opts );
+            $.extend(options, opts);
         },
 
         /**
          * Encodes the provided input in a manner safe to place between to HTML tags
          * @param input The untrusted input to be encoded
          */
-        encodeForHTML: function(input) {
+        encodeForHTML: function (input) {
             hasBeenInitialized = true;
             var div = document.createElement('div');
             $(div).text(input);
@@ -118,30 +118,30 @@
          * @throws String Reports error when an unsafe attribute name or value is used (unencoded)
          * @throws String Reports error when attribute name contains invalid characters (unencoded)
          */
-        encodeForHTMLAttribute: function(attr,input,omitAttributeName) {
+        encodeForHTMLAttribute: function (attr, input, omitAttributeName) {
             hasBeenInitialized = true;
             // Check for unsafe attributes
             attr = $.encoder.canonicalize(attr).toLowerCase();
             input = $.encoder.canonicalize(input);
 
-            if ( $.inArray(attr, unsafeKeys['attr_name']) >= 0 ) {
+            if ($.inArray(attr, unsafeKeys['attr_name']) >= 0) {
                 throw "Unsafe attribute name used: " + attr;
             }
 
-            for ( var a=0; a < unsafeKeys['attr_val']; a++ ) {
-                if ( input.toLowerCase().match(unsafeKeys['attr_val'][a]) ) {
+            for (var a = 0; a < unsafeKeys['attr_val']; a++) {
+                if (input.toLowerCase().match(unsafeKeys['attr_val'][a])) {
                     throw "Unsafe attribute value used: " + input;
                 }
             }
 
             immune = attr_whitelist[attr];
             // If no whitelist exists for the attribute, use the minimal default whitelist
-            if ( !immune ) immune = attr_whitelist_classes['default'];
+            if (!immune) immune = attr_whitelist_classes['default'];
 
             var encoded = '';
 
             if (!omitAttributeName) {
-                for (var p = 0; p < attr.length; p++ ) {
+                for (var p = 0; p < attr.length; p++) {
                     var pc = attr.charAt(p);
                     if (!pc.match(/[a-zA-Z\-0-9]/)) {
                         throw "Invalid attribute name specified";
@@ -187,25 +187,25 @@
          * @throws String Reports error when an unsafe property name or value is used
          * @throws String Reports error when illegal characters passed in property name
          */
-        encodeForCSS: function(propName,input,omitPropertyName) {
+        encodeForCSS: function (propName, input, omitPropertyName) {
             hasBeenInitialized = true;
             // Check for unsafe properties
             propName = $.encoder.canonicalize(propName).toLowerCase();
             input = $.encoder.canonicalize(input);
 
-            if ( $.inArray(propName, unsafeKeys['css_key'] ) >= 0 ) {
+            if ($.inArray(propName, unsafeKeys['css_key']) >= 0) {
                 throw "Unsafe property name used: " + propName;
             }
 
-            for ( var a=0; a < unsafeKeys['css_val'].length; a++ ) {
-                if ( input.toLowerCase().indexOf(unsafeKeys['css_val'][a]) >= 0 ) {
+            for (var a = 0; a < unsafeKeys['css_val'].length; a++) {
+                if (input.toLowerCase().indexOf(unsafeKeys['css_val'][a]) >= 0) {
                     throw "Unsafe property value used: " + input;
                 }
             }
 
             immune = css_whitelist[propName];
             // If no whitelist exists for that property, use the minimal default whitelist
-            if ( !immune ) immune = css_whitelist_classes['default'];
+            if (!immune) immune = css_whitelist_classes['default'];
 
             var encoded = '';
 
@@ -244,7 +244,7 @@
          *             the value will be encoded for a URL and both the attribute and value will be canonicalized prior
          *             to encoding the value.
          */
-        encodeForURL: function(input,attr) {
+        encodeForURL: function (input, attr) {
             hasBeenInitialized = true;
             var encoded = '';
             if (attr) {
@@ -270,19 +270,19 @@
          *
          * @param input The untrusted input to be encoded
          */
-        encodeForJavascript: function(input) {
+        encodeForJavascript: function (input) {
             hasBeenInitialized = true;
-            if ( !immune ) immune = default_immune['js'];
+            if (!immune) immune = default_immune['js'];
             var encoded = '';
-            for (var i=0; i < input.length; i++ ) {
+            for (var i = 0; i < input.length; i++) {
                 var ch = input.charAt(i), cc = input.charCodeAt(i);
-                if ($.inArray(ch, immune) >= 0 || hex[cc] == null ) {
+                if ($.inArray(ch, immune) >= 0 || hex[cc] == null) {
                     encoded += ch;
                     continue;
                 }
 
                 var temp = cc.toString(16), pad;
-                if ( cc < 256 ) {
+                if (cc < 256) {
                     pad = '00'.substr(temp.length);
                     encoded += '\\x' + pad + temp.toUpperCase();
                 } else {
@@ -293,18 +293,18 @@
             return encoded;
         },
 
-        canonicalize: function(input,strict) {
+        canonicalize: function (input, strict) {
             hasBeenInitialized = true;
-            if (input===null) return null;
+            if (input === null) return null;
             var out = input, cycle_out = input;
             var decodeCount = 0, cycles = 0;
 
-            var codecs =  [ new HTMLEntityCodec(), new PercentCodec(), new CSSCodec() ];
+            var codecs = [ new HTMLEntityCodec(), new PercentCodec(), new CSSCodec() ];
 
             while (true) {
                 cycle_out = out;
 
-                for (var i=0; i < codecs.length; i++ ) {
+                for (var i = 0; i < codecs.length; i++) {
                     var new_out = codecs[i].decode(out);
                     if (new_out != out) {
                         decodeCount++;
@@ -328,8 +328,8 @@
     };
 
     var hex = [];
-    for ( var c = 0; c < 0xFF; c++ ) {
-        if ( c >= 0x30 && c <= 0x39 || c >= 0x41 && c <= 0x5a || c >= 0x61 && c <= 0x7a ) {
+    for (var c = 0; c < 0xFF; c++) {
+        if (c >= 0x30 && c <= 0x39 || c >= 0x41 && c <= 0x5a || c >= 0x61 && c <= 0x7a) {
             hex[c] = null;
         } else {
             hex[c] = c.toString(16);
@@ -337,11 +337,11 @@
     }
 
     var methods = {
-        html: function(opts) {
+        html: function (opts) {
             return $.encoder.encodeForHTML(opts.unsafe);
         },
 
-        css: function(opts) {
+        css: function (opts) {
             var work = [];
             var out = [];
 
@@ -352,14 +352,14 @@
             }
 
             for (var k in work) {
-                if ( !(typeof work[k] == 'function') && work.hasOwnProperty(k) ) {
+                if (!(typeof work[k] == 'function') && work.hasOwnProperty(k)) {
                     out[k] = $.encoder.encodeForCSS(k, work[k], true);
                 }
             }
             return out;
         },
 
-        attr: function(opts) {
+        attr: function (opts) {
             var work = [];
             var out = [];
 
@@ -370,8 +370,8 @@
             }
 
             for (var k in work) {
-                if ( ! (typeof work[k] == 'function') && work.hasOwnProperty(k) ) {
-                    out[k] = $.encoder.encodeForHTMLAttribute(k,work[k],true);
+                if (!(typeof work[k] == 'function') && work.hasOwnProperty(k)) {
+                    out[k] = $.encoder.encodeForHTMLAttribute(k, work[k], true);
                 }
             }
 
@@ -383,16 +383,16 @@
      * Use this instead of setting the content of an element manually with untrusted user supplied data. The context can
      * be one of 'html', 'css', or 'attr'
      */
-    $.fn.encode = function() {
+    $.fn.encode = function () {
         hasBeenInitialized = true;
         var argCount = arguments.length;
         var opts = {
-            'context'   : 'html',
-            'unsafe'    : null,
-            'name'      : null,
-            'map'       : null,
-            'setter'    : null,
-            'strict'    : true
+            'context': 'html',
+            'unsafe': null,
+            'name': null,
+            'map': null,
+            'setter': null,
+            'strict': true
         };
 
         if (argCount == 1 && typeof arguments[0] == 'object') {
@@ -437,70 +437,70 @@
         _index: 0,
         _mark: 0,
 
-        _hasNext: function() {
-            if ( this._input == null ) return false;
-            if ( this._input.length == 0 ) return false;
+        _hasNext: function () {
+            if (this._input == null) return false;
+            if (this._input.length == 0) return false;
             return this._index < this._input.length;
 
         },
 
-        init: function(input) {
+        init: function (input) {
             this._input = input;
         },
 
-        pushback: function(c) {
+        pushback: function (c) {
             this._pushback = c;
         },
 
-        index: function() {
+        index: function () {
             return this._index;
         },
 
-        hasNext: function() {
-            if ( this._pushback != null ) return true;
+        hasNext: function () {
+            if (this._pushback != null) return true;
             return this._hasNext();
         },
 
-        next: function() {
-            if ( this._pushback != null ) {
+        next: function () {
+            if (this._pushback != null) {
                 var save = this._pushback;
                 this._pushback = null;
                 return save;
             }
 
-            return ( this._hasNext() ) ? this._input.charAt( this._index++ ) : null;
+            return ( this._hasNext() ) ? this._input.charAt(this._index++) : null;
         },
 
-        nextHex: function() {
+        nextHex: function () {
             var c = this.next();
-            if ( c == null ) return null;
-            if ( c.match(/[0-9A-Fa-f]/) ) return c;
+            if (c == null) return null;
+            if (c.match(/[0-9A-Fa-f]/)) return c;
             return null;
         },
 
-        peek: function(c) {
+        peek: function (c) {
             if (c) {
-                if ( this._pushback && this._pushback == c ) return true;
+                if (this._pushback && this._pushback == c) return true;
                 return this._hasNext() ? this._input.charAt(this._index) == c : false;
             }
 
-            if ( this._pushback ) return this._pushback;
+            if (this._pushback) return this._pushback;
             return this._hasNext() ? this._input.charAt(this._index) : null;
         },
 
-        mark: function() {
+        mark: function () {
             this._temp = this._pushback;
             this._mark = this._index;
         },
 
-        reset: function() {
+        reset: function () {
             this._pushback = this._temp;
             this._index = this._mark;
         },
 
-        remainder: function() {
-            var out = this._input.substr( this._index );
-            if ( this._pushback != null ) {
+        remainder: function () {
+            var out = this._input.substr(this._index);
+            if (this._pushback != null) {
                 out = this._pushback + out;
             }
             return out;
@@ -511,9 +511,9 @@
      * Base class for all codecs to extend. This class defines the default behavior or codecs
      */
     var Codec = Class.extend({
-        decode: function(input) {
+        decode: function (input) {
             var out = '', pbs = new PushbackString(input);
-            while(pbs.hasNext()) {
+            while (pbs.hasNext()) {
                 var c = this.decodeCharacter(pbs);
                 if (c != null) {
                     out += c;
@@ -524,7 +524,7 @@
             return out;
         },
         /** @Abstract */
-        decodeCharacter: function(pbs) {
+        decodeCharacter: function (pbs) {
             return pbs.next();
         }
     });
@@ -535,39 +535,39 @@
      * up the search.
      */
     var HTMLEntityCodec = Codec.extend({
-        decodeCharacter: function(input) {
+        decodeCharacter: function (input) {
             input.mark();
             var first = input.next();
 
             // If there is no input, or this is not an entity - return null
-            if ( first == null || first != '&' ) {
+            if (first == null || first != '&') {
                 input.reset();
                 return null;
             }
 
             var second = input.next();
-            if ( second == null ) {
+            if (second == null) {
                 input.reset();
                 return null;
             }
 
             var c;
-            if ( second == '#' ) {
+            if (second == '#') {
                 c = this._getNumericEntity(input);
-                if ( c != null ) return c;
-            } else if ( second.match(/[A-Za-z]/) ) {
+                if (c != null) return c;
+            } else if (second.match(/[A-Za-z]/)) {
                 input.pushback(second);
                 c = this._getNamedEntity(input);
-                if ( c != null ) return c;
+                if (c != null) return c;
             }
             input.reset();
             return null;
         },
 
-        _getNamedEntity: function(input) {
+        _getNamedEntity: function (input) {
             var possible = '', entry, len;
             len = Math.min(input.remainder().length, ENTITY_TO_CHAR_TRIE.getMaxKeyLength());
-            for(var i=0;i<len;i++) {
+            for (var i = 0; i < len; i++) {
                 possible += input.next().toLowerCase();
             }
 
@@ -579,34 +579,34 @@
             input.next();
 
             len = entry.getKey().length;
-            for(var j=0;j<len;j++) {
+            for (var j = 0; j < len; j++) {
                 input.next();
             }
 
-            if(input.peek(';'))
+            if (input.peek(';'))
                 input.next();
 
             return entry.getValue();
         },
 
-        _getNumericEntity: function(input) {
+        _getNumericEntity: function (input) {
             var first = input.peek();
-            if ( first == null ) return null;
-            if (first == 'x' || first == 'X' ) {
+            if (first == null) return null;
+            if (first == 'x' || first == 'X') {
                 input.next();
                 return this._parseHex(input);
             }
             return this._parseNumber(input);
         },
 
-        _parseHex: function(input) {
+        _parseHex: function (input) {
             var out = '';
             while (input.hasNext()) {
                 var c = input.peek();
-                if ( !isNaN( parseInt(c, 16) ) ) {
+                if (!isNaN(parseInt(c, 16))) {
                     out += c;
                     input.next();
-                } else if ( c == ';' ) {
+                } else if (c == ';') {
                     input.next();
                     break;
                 } else {
@@ -614,19 +614,19 @@
                 }
             }
 
-            var i = parseInt(out,16);
-            if ( !isNaN(i) && isValidCodePoint(i) ) return String.fromCharCode(i);
+            var i = parseInt(out, 16);
+            if (!isNaN(i) && isValidCodePoint(i)) return String.fromCharCode(i);
             return null;
         },
 
-        _parseNumber: function(input) {
+        _parseNumber: function (input) {
             var out = '';
             while (input.hasNext()) {
                 var ch = input.peek();
-                if ( !isNaN( parseInt(ch,10) ) ) {
+                if (!isNaN(parseInt(ch, 10))) {
                     out += ch;
                     input.next();
-                } else if ( ch == ';' ) {
+                } else if (ch == ';') {
                     input.next();
                     break;
                 } else {
@@ -634,8 +634,8 @@
                 }
             }
 
-            var i = parseInt(out,10);
-            if ( !isNaN(i) && isValidCodePoint(i) ) return String.fromCharCode(i);
+            var i = parseInt(out, 10);
+            if (!isNaN(i) && isValidCodePoint(i)) return String.fromCharCode(i);
             return null;
         }
     });
@@ -644,28 +644,28 @@
      * Codec for decoding url-encoded strings.
      */
     var PercentCodec = Codec.extend({
-        decodeCharacter: function(input) {
+        decodeCharacter: function (input) {
             input.mark();
             var first = input.next();
-            if ( first == null ) {
+            if (first == null) {
                 input.reset();
                 return null;
             }
 
-            if ( first != '%' ) {
+            if (first != '%') {
                 input.reset();
                 return null;
             }
 
             var out = '';
-            for (var i=0;i<2;i++) {
+            for (var i = 0; i < 2; i++) {
                 var c = input.nextHex();
-                if( c != null ) out += c;
+                if (c != null) out += c;
             }
 
             if (out.length == 2) {
                 var p = parseInt(out, 16);
-                if ( isValidCodePoint(p) )
+                if (isValidCodePoint(p))
                     return String.fromCharCode(p);
             }
 
@@ -678,23 +678,23 @@
      * Codec for decoding CSS escaped text. This codec will decode both decimal and hex values.
      */
     var CSSCodec = Codec.extend({
-        decodeCharacter: function(input) {
+        decodeCharacter: function (input) {
             input.mark();
             var first = input.next();
-            if (first==null || first != '\\') {
+            if (first == null || first != '\\') {
                 input.reset();
                 return null;
             }
 
             var second = input.next();
-            if (second==null) {
+            if (second == null) {
                 input.reset();
                 return null;
             }
 
             // fallthrough logic is intentional here
             // noinspection FallthroughInSwitchStatementJS
-            switch(second) {
+            switch (second) {
                 case '\r':
                     if (input.peek('\n')) {
                         input.next();
@@ -705,17 +705,17 @@
                     return this.decodeCharacter(input);
             }
 
-            if ( parseInt(second,16) == 'NaN' ) {
+            if (parseInt(second, 16) == 'NaN') {
                 return second;
             }
 
             var out = second;
-            for(var j=0;j<5;j++) {
+            for (var j = 0; j < 5; j++) {
                 var c = input.next();
-                if (c==null || isWhiteSpace(c)) {
+                if (c == null || isWhiteSpace(c)) {
                     break;
                 }
-                if (parseInt(c,16) != 'NaN') {
+                if (parseInt(c, 16) != 'NaN') {
                     out += c;
                 } else {
                     input.pushback(c);
@@ -723,7 +723,7 @@
                 }
             }
 
-            var p = parseInt(out,16);
+            var p = parseInt(out, 16);
             if (isValidCodePoint(p))
                 return String.fromCharCode(p);
 
@@ -739,25 +739,31 @@
         maxKeyLen: 0,
         size: 0,
 
-        init: function() { this.clear(); },
-
-        getLongestMatch: function(key) {
-            return ( this.root == null && key == null ) ? null : this.root.getLongestMatch(key,0);
+        init: function () {
+            this.clear();
         },
 
-        getMaxKeyLength: function() { return this.maxKeyLen; },
+        getLongestMatch: function (key) {
+            return ( this.root == null && key == null ) ? null : this.root.getLongestMatch(key, 0);
+        },
 
-        clear: function() { this.root = null, this.maxKeyLen = 0, this.size = 0; },
+        getMaxKeyLength: function () {
+            return this.maxKeyLen;
+        },
 
-        put: function(key,val) {
+        clear: function () {
+            this.root = null, this.maxKeyLen = 0, this.size = 0;
+        },
+
+        put: function (key, val) {
             var len, old;
-            if (this.root==null)
+            if (this.root == null)
                 this.root = new Trie.Node();
-            if ((old=this.root.put(key,0,val))!=null)
+            if ((old = this.root.put(key, 0, val)) != null)
                 return old;
 
-            if ((len=key.length) > this.maxKeyLen )
-                this.maxKeyLen=key.length;
+            if ((len = key.length) > this.maxKeyLen)
+                this.maxKeyLen = key.length;
 
             this.size++;
             return null;
@@ -767,11 +773,17 @@
         _key: null,
         _value: null,
 
-        init: function(key,value) { this._key = key, this._value = value; },
-        getKey: function() { return this._key; },
-        getValue: function() { return this._value; },
-        equals: function(other) {
-            if ( !(other instanceof Trie.Entry) ) {
+        init: function (key, value) {
+            this._key = key, this._value = value;
+        },
+        getKey: function () {
+            return this._key;
+        },
+        getValue: function () {
+            return this._value;
+        },
+        equals: function (other) {
+            if (!(other instanceof Trie.Entry)) {
                 return false;
             }
             return this._key == other._key && this._value == other._value;
@@ -781,10 +793,12 @@
         _value: null,
         _nextMap: null,
 
-        setValue: function(value) { this._value = value; },
+        setValue: function (value) {
+            this._value = value;
+        },
 
-        getNextNode: function(ch) {
-            if ( !this._nextMap ) return null;
+        getNextNode: function (ch) {
+            if (!this._nextMap) return null;
             return this._nextMap[ch];
         },
 
@@ -794,7 +808,7 @@
          * @param pos The position in key that is being handled in this recursion
          * @param value The value of what that key points to
          */
-        put: function(key,pos,value) {
+        put: function (key, pos, value) {
             var nextNode, ch, old;
 
             // Terminating Node Clause (break out of recursion)
@@ -805,15 +819,15 @@
             }
 
             ch = key.charAt(pos);
-            if (this._nextMap==null) {
+            if (this._nextMap == null) {
                 this._nextMap = Trie.Node.newNodeMap();
                 nextNode = new Trie.Node();
                 this._nextMap[ch] = nextNode;
-            } else if ((nextNode=this._nextMap[ch]) == null) {
+            } else if ((nextNode = this._nextMap[ch]) == null) {
                 nextNode = new Trie.Node();
                 this._nextMap[ch] = nextNode;
             }
-            return nextNode.put(key,pos+1,value);
+            return nextNode.put(key, pos + 1, value);
         },
 
         /**
@@ -821,13 +835,13 @@
          * @param key The key being looked up
          * @param pos The position in key that is being handled in this recursion
          */
-        get: function(key,pos) {
+        get: function (key, pos) {
             var nextNode;
             if (key.length <= pos)
                 return this._value;
-            if ((nextNode=this.getNextNode(key.charAt(pos))) == null)
+            if ((nextNode = this.getNextNode(key.charAt(pos))) == null)
                 return null;
-            return nextNode.get(key,pos+1);
+            return nextNode.get(key, pos + 1);
         },
 
         /**
@@ -835,24 +849,24 @@
          * @param key The key being looked up
          * @param pos The position in the key for the current recursion
          */
-        getLongestMatch: function(key,pos) {
+        getLongestMatch: function (key, pos) {
             var nextNode, ret;
             if (key.length <= pos) {
-                return Trie.Entry.newInstanceIfNeeded(key,this._value);
+                return Trie.Entry.newInstanceIfNeeded(key, this._value);
             }
-            if ((nextNode=this.getNextNode(key.charAt(pos)))==null) {
+            if ((nextNode = this.getNextNode(key.charAt(pos))) == null) {
                 // Last in Trie - return this value
-                return Trie.Entry.newInstanceIfNeeded(key,pos,this._value);
+                return Trie.Entry.newInstanceIfNeeded(key, pos, this._value);
             }
-            if ((ret=nextNode.getLongestMatch(key,pos+1))!=null) {
+            if ((ret = nextNode.getLongestMatch(key, pos + 1)) != null) {
                 return ret;
             }
-            return Trie.Entry.newInstanceIfNeeded(key,pos,this._value);
+            return Trie.Entry.newInstanceIfNeeded(key, pos, this._value);
         }
     });
-    Trie.Entry.newInstanceIfNeeded = function() {
+    Trie.Entry.newInstanceIfNeeded = function () {
         var key = arguments[0], value, keyLength;
-        if ( typeof arguments[1] == 'string' ) {
+        if (typeof arguments[1] == 'string') {
             value = arguments[1];
             keyLength = key.length;
         } else {
@@ -860,15 +874,15 @@
             value = arguments[2];
         }
 
-        if (value==null || key==null) {
+        if (value == null || key == null) {
             return null;
         }
         if (key.length > keyLength) {
-            key = key.substr(0,keyLength);
+            key = key.substr(0, keyLength);
         }
-        return new Trie.Entry(key,value);
+        return new Trie.Entry(key, value);
     };
-    Trie.Node.newNodeMap = function() {
+    Trie.Node.newNodeMap = function () {
         return {};
     };
 
@@ -876,7 +890,7 @@
      * Match the Java implementation of the isValidCodePoint check
      * @param codepoint codepoint to check
      */
-    var isValidCodePoint = function(codepoint) {
+    var isValidCodePoint = function (codepoint) {
         return codepoint >= 0x0000 && codepoint <= 0x10FFFF;
     };
 
@@ -884,7 +898,7 @@
      * Perform a quick whitespace check on the supplied string.
      * @param input string to check
      */
-    var isWhiteSpace = function(input) {
+    var isWhiteSpace = function (input) {
         return input.match(/[\s]/);
     };
 
@@ -893,7 +907,7 @@
     var MAP_CHAR_TO_ENTITY = [];
     var ENTITY_TO_CHAR_TRIE = new Trie();
 
-    (function(){
+    (function () {
         MAP_ENTITY_TO_CHAR["&quot"] = "34";
         /* 34 : quotation mark */
         MAP_ENTITY_TO_CHAR["&amp"] = "38";
@@ -1400,28 +1414,28 @@
         /* 9830 : black diamond suit */
 
         for (var entity in MAP_ENTITY_TO_CHAR) {
-            if ( !(typeof MAP_ENTITY_TO_CHAR[entity] == 'function') && MAP_ENTITY_TO_CHAR.hasOwnProperty(entity) ) {
+            if (!(typeof MAP_ENTITY_TO_CHAR[entity] == 'function') && MAP_ENTITY_TO_CHAR.hasOwnProperty(entity)) {
                 MAP_CHAR_TO_ENTITY[MAP_ENTITY_TO_CHAR[entity]] = entity;
             }
         }
 
         for (var c in MAP_CHAR_TO_ENTITY) {
-            if ( !(typeof MAP_CHAR_TO_ENTITY[c] == 'function') && MAP_CHAR_TO_ENTITY.hasOwnProperty(c) ) {
+            if (!(typeof MAP_CHAR_TO_ENTITY[c] == 'function') && MAP_CHAR_TO_ENTITY.hasOwnProperty(c)) {
                 var ent = MAP_CHAR_TO_ENTITY[c].toLowerCase().substr(1);
-                ENTITY_TO_CHAR_TRIE.put(ent,String.fromCharCode(c));
+                ENTITY_TO_CHAR_TRIE.put(ent, String.fromCharCode(c));
             }
         }
 
     })();
 
     // If ES5 Enabled Browser - Lock the encoder down as much as possible
-    if ( Object.freeze ) {
+    if (Object.freeze) {
         $.encoder = Object.freeze($.encoder);
         $.fn.encode = Object.freeze($.fn.encode);
-    } else if ( Object.seal ) {
+    } else if (Object.seal) {
         $.encoder = Object.seal($.encoder);
         $.fn.encode = Object.seal($.fn.encode);
-    } else if ( Object.preventExtensions ) {
+    } else if (Object.preventExtensions) {
         $.encoder = Object.preventExtensions($.encoder);
         $.fn.encode = Object.preventExtensions($.fn.encode);
     }

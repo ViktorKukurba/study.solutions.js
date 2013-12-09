@@ -1,30 +1,29 @@
-﻿
-/**
-* @constructor
-*/
+﻿/**
+ * @constructor
+ */
 function Observer() {
     this.observers = [];
 };
 
-Observer.prototype.add = function (obj) {
+Observer.prototype.add = function(obj) {
     return this.observers.push(obj);
 };
 
-Observer.prototype.get = function (index) {
+Observer.prototype.get = function(index) {
     if (index > -1 && index < this.observers.length) {
         return this.observers[index];
     }
 };
 
-Observer.prototype.count = function () {
+Observer.prototype.count = function() {
     return this.observers.length;
 };
 
-Observer.prototype.remove = function (index) {
+Observer.prototype.remove = function(index) {
     this.observers.slice(index, 1);
 };
 
-Observer.prototype.indexOf = function (obj) {
+Observer.prototype.indexOf = function(obj) {
     /** @type {number} */
     var index = -1;
     for (/** @type {number} */var i = 0; i < this.length; i++) {
@@ -52,7 +51,7 @@ function FootballMatch(title) {
         var input = document.getElementsByTagName('body')[0].appendChild(document.createElement('input'));
         var button = document.getElementsByTagName('body')[0].appendChild(document.createElement('button'));
         button.innerHTML = 'Notify';
-        button.onclick = function(evt) {
+        button.onclick = function (evt) {
             if (input.value) {
                 self_.notify({ name: title_, time: (new Date()).toString(), message: input.value });
             }
@@ -78,19 +77,19 @@ FootballMatch.prototype.notify = function (context) {
 };
 
 /**
-* A observer.
-* @interface
-*/
+ * A observer.
+ * @interface
+ */
 function FootballMatchObserver() {
-    this.Update = function() {
+    this.Update = function () {
     };
 }
 
 /**
-* @constructor
-* @implements {FootballMatchObserver}
-* @param {string} name. Name of magazine
-*/
+ * @constructor
+ * @implements {FootballMatchObserver}
+ * @param {string} name. Name of magazine
+ */
 function SportOnlineMagazine(name) {
 
     function init(parameters) {
@@ -101,16 +100,16 @@ function SportOnlineMagazine(name) {
         title.innerHTML = name + '(SportOnlineMagazine)';
         line = magazine.appendChild(document.createElement('ul'));
     }
-    
+
     /**
-    * Update magazine
-    * @this {SportOnlineMagazine}
-    * @param {Object} context. Notification object
-    */
+     * Update magazine
+     * @this {SportOnlineMagazine}
+     * @param {Object} context. Notification object
+     */
     this.Update = function (context) {
         /** @type{Element} */
         var li = line.appendChild(document.createElement('li'));
-        li.innerHTML = 'Event: ' + context['name'] + 'Time: ' + context['time']+ context['message'];
+        li.innerHTML = 'Event: ' + context['name'] + 'Time: ' + context['time'] + context['message'];
     };
     /** @type{Element} */
     var line;
@@ -118,10 +117,10 @@ function SportOnlineMagazine(name) {
 }
 
 /**
-* @constructor
-* @implements {FootballMatchObserver}
-* @param {string} name. Name of oline source.
-*/
+ * @constructor
+ * @implements {FootballMatchObserver}
+ * @param {string} name. Name of oline source.
+ */
 function FootballOnline(name) {
 
     function init(parameters) {
@@ -133,10 +132,11 @@ function FootballOnline(name) {
         }
         news = video.appendChild(document.createElement('div'));
     }
+
     /**
-    * @this {FootballOnline}
-    * @param {Object} context. Notification object
-    */
+     * @this {FootballOnline}
+     * @param {Object} context. Notification object
+     */
     this.Update = function (context) {
         news.innerHTML = 'Event: ' + context['name'] + 'Time: ' + context['time'] + context['message'];
     };
@@ -145,10 +145,10 @@ function FootballOnline(name) {
     init();
 }
 
-window.onload = function() {
+window.onload = function () {
     /** @type {FootballMatch}*/
     var fm = new FootballMatch('Football');
     fm.addSubscriber(new FootballOnline('LiveScore'));
     fm.addSubscriber(new FootballOnline('LiveGol'));
-    fm.addSubscriber(new SportOnlineMagazine('LiveSport')); 
+    fm.addSubscriber(new SportOnlineMagazine('LiveSport'));
 };

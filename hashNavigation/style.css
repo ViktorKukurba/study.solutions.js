@@ -1,30 +1,35 @@
-﻿body{
+﻿body {
     background: #fff;
-    margin:0;
+    margin: 0;
 }
-.clear{
+
+.clear {
     clear: both;
     height: 0;
     visibility: hidden;
     display: block;
 }
+
 a {
     text-decoration: none;
 }
-#tab-container{
-    font-family: Arial,  Verdana, Helvetica, sans-serif;
+
+#tab-container {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
     font-size: 12px;
-    line-height:14px;
+    line-height: 14px;
     margin: 3em auto;
     width: 500px;
     overflow: hidden;
 }
-#tab-container ul{
+
+#tab-container ul {
     list-style: none;
     list-style-position: outside;
     width: 100%;
 }
-#tab-container ul.tab-menu li{
+
+#tab-container ul.tab-menu li {
     display: block;
     float: left;
     position: relative;
@@ -42,16 +47,19 @@ a {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
-#tab-container ul.tab-menu li.active{
+
+#tab-container ul.tab-menu li.active {
     background: #fff;
     color: #0088CC;
     height: 15px;
     border-bottom: 0;
 }
+
 .tab-top-border {
     border-bottom: 1px solid #d0ccc9;
 }
-.tab-content{
+
+.tab-content {
     margin: 0 auto;
     background: #efefef;
     background: #fff;
@@ -64,10 +72,12 @@ a {
     display: none;
     height: 250px;
 }
-#tab-container div.active{
+
+#tab-container div.active {
     display: block;
 }
-.tab-content h1{
+
+.tab-content h1 {
     line-height: 1em;
     height: 28px;
     font-size: 22px;

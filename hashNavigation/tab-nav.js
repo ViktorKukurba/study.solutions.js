@@ -1,16 +1,16 @@
 ﻿;
-var hashRouter = (function() {
+var hashRouter = (function () {
     /**
-    * @private
-    * @type {Array}
-    */
+     * @private
+     * @type {Array}
+     */
     var routes = [];
 
     /**
-    * @param {string} route
-    * @return {Object} Route object.
-    */
-    var parseRoute = function(route) {
+     * @param {string} route
+     * @return {Object} Route object.
+     */
+    var parseRoute = function (route) {
         /**@type{Object}*/
         var properties = { route: [], params: {} };
         /**@type{Array.<string>}*/
@@ -31,9 +31,9 @@ var hashRouter = (function() {
     };
 
     /**
-    * Handle hash change
-    */
-    var handleHashChange = function() {
+     * Handle hash change
+     */
+    var handleHashChange = function () {
         for (/**@type{number} */ var i = 0; i < routes.length; i++) {
             var properties = parseRoute(routes[i]);
             if (!properties) continue;
@@ -42,12 +42,12 @@ var hashRouter = (function() {
         }
     };
     return {
-        run: function() {
+        run: function () {
             window.removeEventListener('hashchange', handleHashChange, false);
             window.addEventListener('hashchange', handleHashChange, false);
             handleHashChange();
         },
-        addHashRoute: function(route, callback) {
+        addHashRoute: function (route, callback) {
             if (typeof route !== 'string' || typeof callback !== 'function') {
                 return;
             }
@@ -57,23 +57,27 @@ var hashRouter = (function() {
 })();
 
 
-window.onload = function() {
-    new TabContainer([{ name: 'dynamo', title: 'Dynamo' }, { name: 'dnipro', title: 'Dnipro' }, { name: 'karpaty', title: 'Karpaty' }]);
-    hashRouter.addHashRoute(':id/karpaty', function(context) {
+window.onload = function () {
+    new TabContainer([
+        { name: 'dynamo', title: 'Dynamo' },
+        { name: 'dnipro', title: 'Dnipro' },
+        { name: 'karpaty', title: 'Karpaty' }
+    ]);
+    hashRouter.addHashRoute(':id/karpaty', function (context) {
         karpaty = karpaty || new FcKarpatyWidget($('<div/>', { id: 'karpaty-contant' }).addClass('tab-content').appendTo($('#tab-container')));
         if (dnipro) dnipro.hide();
         if (dynamo) dynamo.hide();
         karpaty.show();
     });
 
-    hashRouter.addHashRoute(':id/dnipro', function(context) {
+    hashRouter.addHashRoute(':id/dnipro', function (context) {
         dnipro = dnipro || new FcDniproWidget($('<div/>', { id: 'dnipro-contant' }).addClass('tab-content').appendTo($('#tab-container')));
         if (karpaty) karpaty.hide();
         if (dynamo) dynamo.hide();
         dnipro.show();
     });
 
-    hashRouter.addHashRoute(':id/dynamo', function(context) {
+    hashRouter.addHashRoute(':id/dynamo', function (context) {
         dynamo = dynamo || new FcDynamoWidget($('<div/>', { id: 'dynamo-contant' }).addClass('tab-content').appendTo($('#tab-container')));
         if (karpaty) karpaty.hide();
         if (dnipro) dnipro.hide();

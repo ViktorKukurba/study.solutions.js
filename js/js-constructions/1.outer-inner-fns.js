@@ -1,8 +1,7 @@
-
 /**
-* outer function
-* return {void}
-*/
+ * outer function
+ * return {void}
+ */
 function outer() {
     assert(typeof outer === 'function', "outer() is in scope");
     assert(typeof a === 'number', "a is in scope");
@@ -15,9 +14,9 @@ function outer() {
     assert(typeof b === 'number', "b is in scope");
 
     /**
-    * outer function
-    * return {void}
-    */
+     * outer function
+     * return {void}
+     */
 
     function inner() {
         /**@type{string}*/

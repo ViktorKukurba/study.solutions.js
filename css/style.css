@@ -1,2 +1,7 @@
-li.pass { color: green; }
-li.fail { color: red; }
+li.pass {
+    color: green;
+}
+
+li.fail {
+    color: red;
+}

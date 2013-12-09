@@ -20,13 +20,13 @@
         module('Canonicalize Test Suite');
         var $fn = $.encoder.canonicalize;
 
-        test('Null Paths', function() {
+        test('Null Paths', function () {
             strictEqual($fn(null), null);
             strictEqual($fn(null, true), null);
             strictEqual($fn(null, false), null);
         });
 
-        test('Exception Paths', function() {
+        test('Exception Paths', function () {
             equal($fn('%25', true), '%');
             equal($fn('%25', false), '%');
             equal($fn('%25'), '%');
@@ -53,12 +53,12 @@
             equal($fn('&#X3C;'), '<');
         });
 
-        test('Percent Encoding', function() {
+        test('Percent Encoding', function () {
             equal($fn('%3c'), '<');
             equal($fn('%3C'), '<');
         });
 
-        test('HTML Entity Encoding', function() {
+        test('HTML Entity Encoding', function () {
             equal($fn('&#60'), '<');
             equal($fn('&#060'), '<');
             equal($fn('&#0060'), '<');
@@ -85,7 +85,7 @@
             equal($fn('&#x000003c;'), '<');
         });
 
-        test('CSS Encoding', function() {
+        test('CSS Encoding', function () {
             equal($fn('\\3c'), '<');
             equal($fn('\\03c'), '<');
             equal($fn('\\003c'), '<');
@@ -98,7 +98,7 @@
             equal($fn('\\00003C'), '<');
         });
 
-        test('Detect Double Encoding', function() {
+        test('Detect Double Encoding', function () {
             equal($fn('&#x26;lt&#59', false), '<');
             equal($fn('%255c', false), '\\');
             equal($fn('%2525', false), '%');
@@ -109,7 +109,7 @@
         });
 
         module('HTML Entity Contextual Encoding');
-        test('Entity Encoding', function() {
+        test('Entity Encoding', function () {
             var e = $('#test');
             e.encode('html', "<b>");
             equal(e.html(), '&lt;b&gt;');
@@ -120,26 +120,26 @@
         });
 
         module('HTML Attribute Contextual Encoding');
-        test('Attribute Encoding', function() {
+        test('Attribute Encoding', function () {
             var e = $('#test');
             equal(e.encode('attr', 'a', '<B>').attr('a'), '&#x3c;B&#x3e;');
             equal($.encoder.encodeForHTMLAttribute('a', '<B>'), 'a="&#x3c;B&#x3e;"')
         });
 
         module('URL Contextual Encoding');
-        test('URL Encoding', function() {
+        test('URL Encoding', function () {
             equal($.encoder.encodeForURL('<b>'), '%3Cb%3E');
         });
 
         module('Javascript Contextual Encoding');
-        test('Javascript Encoding', function() {
+        test('Javascript Encoding', function () {
             equal($.encoder.encodeForJavascript('<b>'), '\\x3Cb\\x3E');
             equal($.encoder.encodeForJavascript('">'), '\\x22\\x3E');
             equal($.encoder.encodeForJavascript('\''), '\\x27');
         });
 
         module('CSS Contextual Encoding');
-        test('Test CSS Escaping Whitelist', function() {
+        test('Test CSS Escaping Whitelist', function () {
             equal($.encoder.encodeForCSS('background', 'url("http://site.com/background.jpg?a=1&b=2") 100% top left #CCC'), 'background: url("http://site.com/background.jpg?a=1&b=2") 100% top left #CCC');
             equal($.encoder.encodeForCSS('background-color', '#C0C0C0'), 'background-color: #C0C0C0');
             equal($.encoder.encodeForCSS('background-image', 'url("http://site.com/background.jpg?a=1&b=2")'), 'background-image: url("http://site.com/background.jpg?a=1&b=2")');
@@ -151,26 +151,26 @@
             equal($.encoder.encodeForCSS('outline-color', '#C0C0C0'), 'outline-color: #C0C0C0');
         });
 
-        test('Test CSS Unsafe Blacklist', function() {
-            raises( function() {
+        test('Test CSS Unsafe Blacklist', function () {
+            raises(function () {
                 $.encoder.encodeForCSS('background', 'expression(eval(alert(x)))');
             }, 'CSS Expressions');
-            raises( function() {
+            raises(function () {
                 $.encoder.encodeForCSS('behavior', 'url(xss.js)');
             }, 'Behavior Value');
-            raises( function() {
+            raises(function () {
                 $.encoder.encodeForCSS('-moz-behavior', 'url(xss.js)');
             }, 'Behavior (Mozilla Variant) Value');
-            raises( function() {
+            raises(function () {
                 $.encoder.encodeForCSS('-ms-behavior', 'url(xss.js)');
             }, 'Behavior (Microsoft Variant) Value');
         });
 
-        test('Ensure Proper CSS Escaping Syntax', function() {
+        test('Ensure Proper CSS Escaping Syntax', function () {
             equal($.encoder.encodeForCSS('color', '%'), 'color: \\000025');
         });
 
-        test('CSS Instance Method', function() {
+        test('CSS Instance Method', function () {
             equal($('#test').encode({
                 context: 'css',
                 map: {
@@ -182,17 +182,17 @@
 
         if (Object.freeze) {
             module('Testing Frozen Object');
-            test('isFrozen', function() {
-                ok( Object.isFrozen($.encoder));
-                ok( Object.isFrozen($.fn.encode));
+            test('isFrozen', function () {
+                ok(Object.isFrozen($.encoder));
+                ok(Object.isFrozen($.fn.encode));
             });
         }
 
         if (Object.seal) {
             module('Testing Sealed Object');
-            test('isSealed', function() {
-                ok( Object.isSealed($.encoder));
-                ok( Object.isSealed($.fn.encode));
+            test('isSealed', function () {
+                ok(Object.isSealed($.encoder));
+                ok(Object.isSealed($.fn.encode));
             });
         }
     </script>

@@ -1,9 +1,9 @@
 ﻿/*
-* Copyright (c) 2010 - The OWASP Foundation
-*
-* The jquery-encoder is published by OWASP under the MIT license. You should read and accept the
-* LICENSE before you use, modify, and/or redistribute this software.
-*/
+ * Copyright (c) 2010 - The OWASP Foundation
+ *
+ * The jquery-encoder is published by OWASP under the MIT license. You should read and accept the
+ * LICENSE before you use, modify, and/or redistribute this software.
+ */
 (function ($) {
     var default_immune = {
         'js': [',', '.', '_', ' ']
@@ -59,27 +59,27 @@
     var hasBeenInitialized = false;
 
     /**
-    * Encoder is the static container for the encodeFor* series and canonicalize methods. They are contained within
-    * the encoder object so the plugin can take advantage of object freezing provided in ES5 to protect these methods
-    * from being tampered with at runtime.
-    */
+     * Encoder is the static container for the encodeFor* series and canonicalize methods. They are contained within
+     * the encoder object so the plugin can take advantage of object freezing provided in ES5 to protect these methods
+     * from being tampered with at runtime.
+     */
     $.encoder = {
         author: 'Chris Schmidt (chris.schmidt@owasp.org)',
         version: '${project.version}',
 
         /**
-        * Allows configuration of runtime options prior to using the plugin. Once the plugin has been initialized,
-        * options cannot be changed.
-        *
-        * Possible Options:
-        * <pre>
-        * Options              Description                         Default
-        * ----------------------------------------------------------------------------
-        * blacklist            Enable blacklist validation         true
-        * </pre>
-        *
-        * @param opts
-        */
+         * Allows configuration of runtime options prior to using the plugin. Once the plugin has been initialized,
+         * options cannot be changed.
+         *
+         * Possible Options:
+         * <pre>
+         * Options              Description                         Default
+         * ----------------------------------------------------------------------------
+         * blacklist            Enable blacklist validation         true
+         * </pre>
+         *
+         * @param opts
+         */
         init: function (opts) {
             if (hasBeenInitialized)
                 throw "jQuery Encoder has already been initialized - cannot set options after initialization";
@@ -89,9 +89,9 @@
         },
 
         /**
-        * Encodes the provided input in a manner safe to place between to HTML tags
-        * @param input The untrusted input to be encoded
-        */
+         * Encodes the provided input in a manner safe to place between to HTML tags
+         * @param input The untrusted input to be encoded
+         */
         encodeForHTML: function (input) {
             hasBeenInitialized = true;
             var div = document.createElement('div');
@@ -100,24 +100,24 @@
         },
 
         /**
-        * Encodes the provided input in a manner safe to place in the value (between to "'s) in an HTML attribute.
-        *
-        * Unless directed not to, this method will return the full <code>attr="value"</code> as a string. If
-        * <code>omitAttributeName</code> is true, the method will only return the <code>value</code>. Both the attribute
-        * name and value are canonicalized and verified with whitelist and blacklist prior to returning.
-        *
-        * Example:
-        * <pre>
-        * $('#container').html('&lt;div ' + $.encoder.encodeForHTMLAttribute('class', untrustedData) + '/>');
-        * </pre>
-        *
-        * @param attr The attribute to encode for
-        * @param input The untrusted input to be encoded
-        * @param omitAttributeName Whether to omit the attribute name and the enclosing quotes or not from the encoded
-        *                          output.
-        * @throws String Reports error when an unsafe attribute name or value is used (unencoded)
-        * @throws String Reports error when attribute name contains invalid characters (unencoded)
-        */
+         * Encodes the provided input in a manner safe to place in the value (between to "'s) in an HTML attribute.
+         *
+         * Unless directed not to, this method will return the full <code>attr="value"</code> as a string. If
+         * <code>omitAttributeName</code> is true, the method will only return the <code>value</code>. Both the attribute
+         * name and value are canonicalized and verified with whitelist and blacklist prior to returning.
+         *
+         * Example:
+         * <pre>
+         * $('#container').html('&lt;div ' + $.encoder.encodeForHTMLAttribute('class', untrustedData) + '/>');
+         * </pre>
+         *
+         * @param attr The attribute to encode for
+         * @param input The untrusted input to be encoded
+         * @param omitAttributeName Whether to omit the attribute name and the enclosing quotes or not from the encoded
+         *                          output.
+         * @throws String Reports error when an unsafe attribute name or value is used (unencoded)
+         * @throws String Reports error when attribute name contains invalid characters (unencoded)
+         */
         encodeForHTMLAttribute: function (attr, input, omitAttributeName) {
             hasBeenInitialized = true;
             // Check for unsafe attributes
@@ -169,24 +169,24 @@
         },
 
         /**
-        * Encodes the provided input in a manner safe to place in the value of an elements <code>style</code> attribute
-        *
-        * Unless directed not to, this method will return the full <code>property: value</code> as a string. If
-        * <code>omitPropertyName</code> is <code>true</code>, the method will only return the <code>value</code>. Both
-        * the property name and value are canonicalized and verified with whitelist and blacklist prior to returning.
-        *
-        * Example:
-        * <pre>
-        * $('#container').html('&lt;div style="' + $.encoder.encodeForCSS('background-image', untrustedData) + '"/>');
-        * </pre>
-        *
-        * @param propName The property name that is being set
-        * @param input The untrusted input to be encoded
-        * @param omitPropertyName Whether to omit the property name from the encoded output
-        *
-        * @throws String Reports error when an unsafe property name or value is used
-        * @throws String Reports error when illegal characters passed in property name
-        */
+         * Encodes the provided input in a manner safe to place in the value of an elements <code>style</code> attribute
+         *
+         * Unless directed not to, this method will return the full <code>property: value</code> as a string. If
+         * <code>omitPropertyName</code> is <code>true</code>, the method will only return the <code>value</code>. Both
+         * the property name and value are canonicalized and verified with whitelist and blacklist prior to returning.
+         *
+         * Example:
+         * <pre>
+         * $('#container').html('&lt;div style="' + $.encoder.encodeForCSS('background-image', untrustedData) + '"/>');
+         * </pre>
+         *
+         * @param propName The property name that is being set
+         * @param input The untrusted input to be encoded
+         * @param omitPropertyName Whether to omit the property name from the encoded output
+         *
+         * @throws String Reports error when an unsafe property name or value is used
+         * @throws String Reports error when illegal characters passed in property name
+         */
         encodeForCSS: function (propName, input, omitPropertyName) {
             hasBeenInitialized = true;
             // Check for unsafe properties
@@ -236,14 +236,14 @@
         },
 
         /**
-        * Encodes the provided input in a manner safe to place in the value of a POST or GET parameter on a request. This
-        * is primarily used to mitigate parameter-splitting attacks and ensure that parameter values are within specification
-        *
-        * @param input The untrusted data to be encoded
-        * @param attr (optional) If passed in, the method will return the full string <code>attr="value"</code> where
-        *             the value will be encoded for a URL and both the attribute and value will be canonicalized prior
-        *             to encoding the value.
-        */
+         * Encodes the provided input in a manner safe to place in the value of a POST or GET parameter on a request. This
+         * is primarily used to mitigate parameter-splitting attacks and ensure that parameter values are within specification
+         *
+         * @param input The untrusted data to be encoded
+         * @param attr (optional) If passed in, the method will return the full string <code>attr="value"</code> where
+         *             the value will be encoded for a URL and both the attribute and value will be canonicalized prior
+         *             to encoding the value.
+         */
         encodeForURL: function (input, attr) {
             hasBeenInitialized = true;
             var encoded = '';
@@ -261,15 +261,15 @@
         },
 
         /**
-        * Encodes the provided input in a manner safe to place in a javascript context, such as the value of an entity
-        * event like onmouseover. This encoding is slightly different than just encoding for an html attribute value as
-        * it follows the escaping rules of javascript. Use this method when dynamically writing out html to an element
-        * as opposed to building an element up using the DOM - as with the .html() method.
-        *
-        * Example $('#element').html('&lt;a onclick=somefunction(\'"' + $.encodeForJavascript($('#input').val()) + '\');">Blargh&lt;/a>');
-        *
-        * @param input The untrusted input to be encoded
-        */
+         * Encodes the provided input in a manner safe to place in a javascript context, such as the value of an entity
+         * event like onmouseover. This encoding is slightly different than just encoding for an html attribute value as
+         * it follows the escaping rules of javascript. Use this method when dynamically writing out html to an element
+         * as opposed to building an element up using the DOM - as with the .html() method.
+         *
+         * Example $('#element').html('&lt;a onclick=somefunction(\'"' + $.encodeForJavascript($('#input').val()) + '\');">Blargh&lt;/a>');
+         *
+         * @param input The untrusted input to be encoded
+         */
         encodeForJavascript: function (input) {
             hasBeenInitialized = true;
             if (!immune) immune = default_immune['js'];
@@ -380,9 +380,9 @@
     };
 
     /**
-    * Use this instead of setting the content of an element manually with untrusted user supplied data. The context can
-    * be one of 'html', 'css', or 'attr'
-    */
+     * Use this instead of setting the content of an element manually with untrusted user supplied data. The context can
+     * be one of 'html', 'css', or 'attr'
+     */
     $.fn.encode = function () {
         hasBeenInitialized = true;
         var argCount = arguments.length;
@@ -427,9 +427,9 @@
     };
 
     /**
-    * The pushback string is used by Codecs to allow them to push decoded characters back onto a string for further
-    * decoding. This is necessary to detect double-encoding.
-    */
+     * The pushback string is used by Codecs to allow them to push decoded characters back onto a string for further
+     * decoding. This is necessary to detect double-encoding.
+     */
     var PushbackString = Class.extend({
         _input: null,
         _pushback: null,
@@ -508,8 +508,8 @@
     });
 
     /**
-    * Base class for all codecs to extend. This class defines the default behavior or codecs
-    */
+     * Base class for all codecs to extend. This class defines the default behavior or codecs
+     */
     var Codec = Class.extend({
         decode: function (input) {
             var out = '', pbs = new PushbackString(input);
@@ -530,10 +530,10 @@
     });
 
     /**
-    * Codec for decoding HTML Entities in strings. This codec will decode named entities as well as numeric and hex
-    * entities even with padding. For named entities, it interally uses a Trie to locate the 'best-match' and speed
-    * up the search.
-    */
+     * Codec for decoding HTML Entities in strings. This codec will decode named entities as well as numeric and hex
+     * entities even with padding. For named entities, it interally uses a Trie to locate the 'best-match' and speed
+     * up the search.
+     */
     var HTMLEntityCodec = Codec.extend({
         decodeCharacter: function (input) {
             input.mark();
@@ -641,8 +641,8 @@
     });
 
     /**
-    * Codec for decoding url-encoded strings.
-    */
+     * Codec for decoding url-encoded strings.
+     */
     var PercentCodec = Codec.extend({
         decodeCharacter: function (input) {
             input.mark();
@@ -675,8 +675,8 @@
     });
 
     /**
-    * Codec for decoding CSS escaped text. This codec will decode both decimal and hex values.
-    */
+     * Codec for decoding CSS escaped text. This codec will decode both decimal and hex values.
+     */
     var CSSCodec = Codec.extend({
         decodeCharacter: function (input) {
             input.mark();
@@ -732,22 +732,28 @@
     });
 
     /**
-    * Trie implementation for Javascript for fast querying and longest matching string lookups.
-    */
+     * Trie implementation for Javascript for fast querying and longest matching string lookups.
+     */
     var Trie = Class.extend({
         root: null,
         maxKeyLen: 0,
         size: 0,
 
-        init: function () { this.clear(); },
+        init: function () {
+            this.clear();
+        },
 
         getLongestMatch: function (key) {
             return (this.root == null && key == null) ? null : this.root.getLongestMatch(key, 0);
         },
 
-        getMaxKeyLength: function () { return this.maxKeyLen; },
+        getMaxKeyLength: function () {
+            return this.maxKeyLen;
+        },
 
-        clear: function () { this.root = null, this.maxKeyLen = 0, this.size = 0; },
+        clear: function () {
+            this.root = null, this.maxKeyLen = 0, this.size = 0;
+        },
 
         put: function (key, val) {
             var len, old;
@@ -767,9 +773,15 @@
         _key: null,
         _value: null,
 
-        init: function (key, value) { this._key = key, this._value = value; },
-        getKey: function () { return this._key; },
-        getValue: function () { return this._value; },
+        init: function (key, value) {
+            this._key = key, this._value = value;
+        },
+        getKey: function () {
+            return this._key;
+        },
+        getValue: function () {
+            return this._value;
+        },
         equals: function (other) {
             if (!(other instanceof Trie.Entry)) {
                 return false;
@@ -781,7 +793,9 @@
         _value: null,
         _nextMap: null,
 
-        setValue: function (value) { this._value = value; },
+        setValue: function (value) {
+            this._value = value;
+        },
 
         getNextNode: function (ch) {
             if (!this._nextMap) return null;
@@ -789,11 +803,11 @@
         },
 
         /**
-        * Recursively add a key
-        * @param key The key being added
-        * @param pos The position in key that is being handled in this recursion
-        * @param value The value of what that key points to
-        */
+         * Recursively add a key
+         * @param key The key being added
+         * @param pos The position in key that is being handled in this recursion
+         * @param value The value of what that key points to
+         */
         put: function (key, pos, value) {
             var nextNode, ch, old;
 
@@ -817,10 +831,10 @@
         },
 
         /**
-        * Recursively lookup a key's value
-        * @param key The key being looked up
-        * @param pos The position in key that is being handled in this recursion
-        */
+         * Recursively lookup a key's value
+         * @param key The key being looked up
+         * @param pos The position in key that is being handled in this recursion
+         */
         get: function (key, pos) {
             var nextNode;
             if (key.length <= pos)
@@ -831,10 +845,10 @@
         },
 
         /**
-        * Recusrsively lookup the longest key match
-        * @param key The key being looked up
-        * @param pos The position in the key for the current recursion
-        */
+         * Recusrsively lookup the longest key match
+         * @param key The key being looked up
+         * @param pos The position in the key for the current recursion
+         */
         getLongestMatch: function (key, pos) {
             var nextNode, ret;
             if (key.length <= pos) {
@@ -873,17 +887,17 @@
     };
 
     /**
-    * Match the Java implementation of the isValidCodePoint check
-    * @param codepoint codepoint to check
-    */
+     * Match the Java implementation of the isValidCodePoint check
+     * @param codepoint codepoint to check
+     */
     var isValidCodePoint = function (codepoint) {
         return codepoint >= 0x0000 && codepoint <= 0x10FFFF;
     };
 
     /**
-    * Perform a quick whitespace check on the supplied string.
-    * @param input string to check
-    */
+     * Perform a quick whitespace check on the supplied string.
+     * @param input string to check
+     */
     var isWhiteSpace = function (input) {
         return input.match(/[\s]/);
     };
