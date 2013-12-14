@@ -1,0 +1,10 @@
+.desc-sort {
+    background-image:url(../img/desc.jpeg);
+    width: 50px;
+    display:inline-block;
+}
+.asc-sort {
+    display:inline-block;
+    background-image:url(../img/asc.jpeg);
+    width: 50px;
+}
