@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="scripts/light-table.js"></script>
     <title></title>
 </head>
 <body>
 <div id="test"></div>
 <div id="test2"></div>
+<a href="#" id="test_but">link</a>
+<input type='button' value='Change' onClick="change_but()">
+
 </body>
 <script type="application/javascript">
+    function change_but(){
+        document.getElementById('test_but').onclick=function(){
+            alert('новая обработка');
+        }
+    }
+
     window.onload = function () {
         var data = [{model: 'A', label: 'BMW', price:'20000'},
             {model: 'C', label: 'Fiat', price:'10000'},
             {model: 'D', label: 'Porsche', price:'30000'},
             {model: 'B', label: 'Opel', price:'1500'}];
         var div = document.getElementById('test');
-        var exTable = LightTable;
-        exTable.init(div, { columns: [{name:'Car', prop:'label'},
-            {name:'Model', prop:'model'}, {name:'$', prop:'price'}] });
+        var exTable = lightTable(div, { columns: [{name:'Car', prop:'label'},
+            {name:'Model', prop:'model'}, {name:'$', prop:'price', type:'currency', sort:true}] });
         exTable.draw(data);
         var div2 = document.getElementById('test2');
-        var exTable2 = LightTable;
-        exTable2.init(div2, { columns: [{name:'label', prop:'label'},
+        var exTable2 = lightTable(div2, { columns: [{name:'label', prop:'label'},
             {name:'model', prop:'model'}, {name:'price', prop:'price'}] });
         exTable2.draw(data);
         setTimeout(function(){exTable2.addRows({model: 'A', label:'Ford', price: '22000'})}, 3000);
-
     }
 </script>
 </html>

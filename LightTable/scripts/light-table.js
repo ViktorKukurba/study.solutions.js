@@ -2,16 +2,13 @@
  * Created by viktor on 12/10/13.
  */
 
+/**
+ * @param {Element|Node} element Container for table.
+ * @param {Object} config Configuration object.
+ * */
+var tableFactory = function (element, config) {
 
-var tableFactory = function () {
-
-    /**
-     * @param {Element|Node} element Container for table.
-     * @param {Object} config Configuration object.
-     * */
-    var initialize_ = function (element, config) {
-        element_ = element;
-        settings_ = config;
+    var initialize_ = function () {
         table_ = element_.getElementsByTagName('TABLE')[0];
         if (!table_) {
             table_ = '<table class="ui-table">' +
@@ -32,11 +29,14 @@ var tableFactory = function () {
         clearTableData_();
         drawHeader_();
         drawTable_();
+        console.log(element_);
+        element_.querySelector('span.desc-sort').onclick = function(){
+            element_.querySelectorAll('tr td:nth-of-type(3)').sort();
+        }
     };
 
     var lightTable = {
         draw: draw_,
-        init: initialize_,
         clear: clearTableData_,
         addRows: addRows_
     };
@@ -60,6 +60,9 @@ var tableFactory = function () {
             if (column.sort) {
                 th.setAttribute('data-column', column.name);
                 th.setAttribute('data-sorting', column['sort']);
+                var span = div.appendChild(document.createElement('span'));
+                span.className = 'desc-sort';
+                span.innerHTML = 'd';
             }
         }
     }
@@ -82,7 +85,7 @@ var tableFactory = function () {
             var row = rows[i++];
             /** @type {Node|Element} */
             var bodyRow = tbody.insertRow(-1);
-            /**@type{number}*/ var j = 0
+            /**@type{number}*/ var j = 0;
             for (; j < columns.length;) {
                 var column = columns[j++];
                 /** @type {Node|Element} */
@@ -116,11 +119,12 @@ var tableFactory = function () {
         }
     }
 
-    var settings_;
+    var element_ = element;
+    var settings_ = config;
     var table_;
     var data_;
-    var element_;
+    initialize_();
     return lightTable;
 };
 
-window.LightTable = (tableFactory)();
+window.lightTable = tableFactory;
