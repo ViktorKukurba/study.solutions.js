@@ -1,12 +1,12 @@
 ﻿/**
-* @interface
-*/
+ * @interface
+ */
 function BaseFactory(factorytype) {
-    
+
     /**
-    * @return {string} Type of factory
-    * @this {BaseFactory}
-    */
+     * @return {string} Type of factory.
+     * @this {BaseFactory}
+     */
     this.getType = function() {
         return type;
     };
@@ -14,27 +14,27 @@ function BaseFactory(factorytype) {
     var type = factorytype;
 
     /**
-    * @Creates product
-    * @this {BaseFactory}
-    */
+     * Creates product
+     * @this {BaseFactory}
+     */
     this.createProduct = function() {
     };
 
     /**
-    * Returns count of factory employees
-    * @return {number} 
-    * @this {BaseFactory}
-    */
-    this.getEmployeesCount = function () {
+     * Returns count of factory employees
+     * @return {number}
+     * @this {BaseFactory}
+     */
+    this.getEmployeesCount = function() {
         return employeesCount;
     };
 
     /**
-    * Sets count of factory employees
-    * @param {number} 
-    * @this {BaseFactory}
-    */
-    this.setEmployeesCount = function (employees) {
+     * Sets count of factory employees
+     * @param {number} employees
+     * @this {BaseFactory}
+     */
+    this.setEmployeesCount = function(employees) {
         if (typeof employees === 'number' && employees > 0) {
             employeesCount = employees;
         }
@@ -44,19 +44,19 @@ function BaseFactory(factorytype) {
     var employeesCount = 0;
 
     /**
-    * Returns count of factory products
-    * @return {number} 
-    * @this {BaseFactory}
-    */
-    this.getProducts = function () {
+     * Returns count of factory products
+     * @return {number}
+     * @this {BaseFactory}
+     */
+    this.getProducts = function() {
         return products;
     };
 
     /**
-    * Sells products and adds money to funds
-    * @this {BaseFactory}
-    */
-    this.sellProducts = function () {
+     * Sells products and adds money to funds
+     * @this {BaseFactory}
+     */
+    this.sellProducts = function() {
         while (products.length) {
             var product = products.shift();
             funds += product.getPrice();
@@ -64,11 +64,11 @@ function BaseFactory(factorytype) {
     };
 
     /**
-    * Adds product to factory
-    * @param {Object}
-    * @this {BaseFactory}
-    */
-    this.addProduct = function (product) {
+     * Adds product to factory
+     * @param {Object} product
+     * @this {BaseFactory}
+     */
+    this.addProduct = function(product) {
         if (product) {
             products.push(product);
         }
@@ -78,32 +78,40 @@ function BaseFactory(factorytype) {
     var funds = 0;
 
     /**
-    * @return {number}
-    */
-    this.getFunds = function () {
+     * @return {number}
+     */
+    this.getFunds = function() {
         return funds;
     };
 
     /**@type {Array.<Object>}*/
     var products = [];
-    
+
 }
 
 /**
-* @constructor
-* @extends {BaseFactory}
-*/
+ * @constructor
+ * @extends {BaseFactory}
+ */
 function ChocolateFactory() {
     //BaseFactory.apply(this, arguments);
-    this.createProduct = function (type) {
+    this.createProduct = function(type) {
         var product;
         if (this.getEmployeesCount() > 0) {
             switch (type) {
-                case 'chocolate-milk': debugger; product = new ChocolateProduct({ name: 'chocolate-milk', price: 10, weight: 100, taste: 'milk' }); break;
-                case 'chocolate-nut': product = new ChocolateProduct({ name: 'chocolate-nut', price: 10, weight: 100, taste: 'nut' }); break;
-                case 'candies': product = new ChocolateProduct({ name: 'candies', price: 78, weight: 1000, taste: 'nut' }); break;
+                case 'chocolate-milk':
+                    product = new ChocolateProduct({ name: 'chocolate-milk', price: 10, weight: 100, taste: 'milk' });
+                    break;
+                case 'chocolate-nut':
+                    product = new ChocolateProduct({ name: 'chocolate-nut', price: 10, weight: 100, taste: 'nut' });
+                    break;
+                case 'candies':
+                    product = new ChocolateProduct({ name: 'candies', price: 78, weight: 1000, taste: 'nut' });
+                    break;
                 default:
-                case 'chocolate': product = new ChocolateProduct({ name: 'chocolate', price: 10, weight: 100 }); break;
+                case 'chocolate':
+                    product = new ChocolateProduct({ name: 'chocolate', price: 10, weight: 100 });
+                    break;
             }
             self_.addProduct(product);
             return product;
@@ -115,11 +123,11 @@ function ChocolateFactory() {
 ChocolateFactory.prototype = new BaseFactory('chocolate');
 
 /**
-* @constructor
-*/
+ * @constructor
+ */
 function FactoryProduct(parameters) {
     var price = parameters['price'];
-    this.getPrice = function() {
+    this.getPrice = function () {
         return price || 0;
     };
 
@@ -131,14 +139,14 @@ function FactoryProduct(parameters) {
 
 function ChocolateProduct(parameters) {
     FactoryProduct.apply(this, arguments);
-    
+
     var weight = parameters['weight'];
-    this.getWeigth = function() {
+    this.getWeigth = function () {
         return weight;
     };
-    
+
     var taste = parameters['taste'];
-    this.getTaste = function() {
+    this.getTaste = function () {
         return taste;
     };
 };
@@ -170,27 +178,32 @@ function ViolinProduct(parameters) {
     };
 
     var bow = parameters['bow'];
-    this.getBow = function() {
+    this.getBow = function () {
         return bow;
     };
 };
 
 
 /**
-* @constructor
-* @extends {BaseFactory}
-*/
+ * @constructor
+ * @extends {BaseFactory}
+ */
 function MusicInstrumentsFactory() {
     //BaseFactory.apply(this, arguments);
     this.createProduct = function (type, strings) {
         if (this.getEmployeesCount() > 0) {
             var product;
             switch (type) {
-                case 'guitar': product = new GuitarProduct({ name: 'guitar', strings: strings, price: 200 }); break;
-                case 'violin': product = new ViolinProduct({ name: 'violin', strings: strings, price: 800 }); break;
+                case 'guitar':
+                    product = new GuitarProduct({ name: 'guitar', strings: strings, price: 200 });
+                    break;
+                case 'violin':
+                    product = new ViolinProduct({ name: 'violin', strings: strings, price: 800 });
+                    break;
                 default:
                     product = new FactoryProduct({ name: 'drum', price: 1200 });
-            };
+            }
+            ;
             self_.addProduct(product);
             return product;
         }
@@ -201,32 +214,32 @@ MusicInstrumentsFactory.prototype = new BaseFactory('music');
 
 function Factory() {
     /**
-    * creates Factory
-    * @param{string} type. Type of factory
-    * @return{IFactory}
-    */
-    this.createFactory = function(type) {
+     * creates Factory
+     * @param{string} type. Type of factory
+     * @return{IFactory}
+     */
+    this.createFactory = function (type) {
         var factory;
         switch (type) {
-        case 'chocolate':
-            factory = new ChocolateFactory(type);
-            factories.push(factory);
-            return factory;
-        case 'music':
-            factory = new MusicInstrumentsFactory(type);
-            factories.push(factory);
-            return factory;
-        default:
-            factory = new BaseFactory(type);
-            factories.push(factory);
-            return factory;
+            case 'chocolate':
+                factory = new ChocolateFactory(type);
+                factories.push(factory);
+                return factory;
+            case 'music':
+                factory = new MusicInstrumentsFactory(type);
+                factories.push(factory);
+                return factory;
+            default:
+                factory = new BaseFactory(type);
+                factories.push(factory);
+                return factory;
         }
     };
 
     /** @type {Array.<BaseFactory>}*/
     var factories = [];
 
-    this.getFactories = function() {
+    this.getFactories = function () {
         return factories;
     };
 }

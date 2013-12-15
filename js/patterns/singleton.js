@@ -1,21 +1,20 @@
-﻿
-/**
-* Singleton simple implementation
-*/
+﻿/**
+ * Singleton simple implementation
+ */
 var singleton = function() {
     /** @type {string} */var title = 'Test random number ';
     /** @type {number} */var value = Math.random();
     return {
-        getValue: function () {
+        getValue: function() {
             return title + value;
         }
     };
-} ();
+}();
 
 /**
-* Singteton for Namespaces
-*/
-var singletonNS = function (name) {
+ * Singteton for Namespaces
+ */
+var singletonNS = function(name) {
     /** @type{number} */var random = Math.random();
     return {
         greetMethod: function() {
@@ -26,17 +25,17 @@ var singletonNS = function (name) {
             return 'Your number is ' + random.toString()[2];
         }
     };
-} ("Viktor");
+}("Viktor");
 
 /**
-* Singleton simple implementation with lazy initialization
-*/
-var singletonLI = (function () {
+ * Singleton simple implementation with lazy initialization
+ */
+var singletonLI = (function() {
     var instance;
 
     /**
-    * return {Object} instance obj 
-    */
+     * return {Object} instance obj
+     */
     function init() {
         /** @type {string} */var title = 'Test random number ';
         /** @type {number} */ var value = Math.random();
@@ -48,7 +47,7 @@ var singletonLI = (function () {
     }
 
     return {
-        getInstance: function() {
+        getInstance: function () {
             if (!instance) {
                 instance = init();
             }
@@ -56,7 +55,7 @@ var singletonLI = (function () {
         }
     };
 
-} ());
+}());
 
 window.onload = function () {
     assert(true, 'simple singleton');
