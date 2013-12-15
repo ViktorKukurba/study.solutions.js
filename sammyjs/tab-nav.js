@@ -71,5 +71,17 @@ function FcDniproWidget() {
 function FcDynamoWidget() {
     FcWidget.apply(this, arguments);
     this.container.append('<h1>FC Dynamo Kyiv<h1>');
-    this.container.append('<img src="../img/fc_dynamo.gif"/>');
+    var img = $('<img src="../img/fc_dynamo.gif"/>').appendTo(this.container);
+    img.on('click', function () {
+        var event = document.createEvent("ImgEvent");
+        event.initImgEvent("click", true, true, window, 0,
+                                                event.screenX, event.screenY, event.clientX, event.clientY,
+                                                event.ctrlKey, event.altKey, event.shiftKey, event.metaKey,
+                                                0, null);
+        this.container[0].dispatchEvent(event);
+    });
+    console.log(img);
+    this.container[0].addEventListener('ImgEvent', function () {
+        alert('Dynamo');
+    });
 }
