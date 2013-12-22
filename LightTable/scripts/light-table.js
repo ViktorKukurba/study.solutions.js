@@ -25,10 +25,10 @@ var tableFactory = function(element, config) {
      * @param {Array.<Object>} data Data list.
      * */
     var draw_ = function(data) {
-        data_ = data;
+        //data_ = data;
         clearTableData_();
         drawHeader_();
-        drawTable_();
+        drawTable_(data);
         if (settings_['sortable']) setSorting_();
         if (settings_['editable']) setEditable_();
     };
@@ -105,11 +105,12 @@ var tableFactory = function(element, config) {
                     var oldinput = td.querySelectorAll('input');
                     if (oldinput && oldinput.length) return;
                     /**@type{Node|Element}*/
+                    var div = td.querySelector('div');
+                    /**@type{Node|Element}*/
                     var input = document.createElement('input');
                     input.type = 'text';
+                    input.style.width = td.style.width;
                     input.value = td.innerText || td.textContent;
-                    /**@type{Node|Element}*/
-                    var div = td.querySelector('div');
                     div.style.display = 'none';
                     td.appendChild(input);
                     input.onblur = function() {
@@ -149,14 +150,19 @@ var tableFactory = function(element, config) {
         'clear': clearTableData_,
         'addRows': addRows_,
         'removeRows': removeRows_,
-        'setColumns': setColumns_
+        'setColumns': setColumns_,
+        'getData': getData_
     };
+
+    function getData_() {
+        return data_;
+    }
 
     /**
      * Adds header for column
-     * @param {number} index
-     * @param {Element|Node} th
      * @param {Object} column
+     * @param {Element|Node} th
+     * @param {number} index
      * */
     function addHeader_(column, th, index) {
         /**@type{Node|Element}*/
@@ -210,8 +216,8 @@ var tableFactory = function(element, config) {
         return null;
     }
 
-    function drawTable_() {
-        addRows_(data_);
+    function drawTable_(data) {
+        addRows_(data);
     }
 
     function removeRows_(rows) {
@@ -234,12 +240,15 @@ var tableFactory = function(element, config) {
         /** @type {Node|Element} */
         var tbody = table_.getElementsByTagName('TBODY')[0];
         /**@type{Array}*/var columns = settings_['columns'];
+        var trCount = tbody.querySelectorAll('tr').length;
         for (; i < length; i++) {
             /**@type {Object}*/var row = rows[i];
+            /**@type {number}*/ var number = trCount + i;
+            data_[data_.length] = row;
             /**@type {Node|Element} */
             var bodyRow = tbody.insertRow(-1);
-            bodyRow.className += (i % 2 == 0) ? 'oddrow' : 'evenrow';
-            bodyRow.setAttribute('data-index', i);
+            bodyRow.className += (number % 2 == 0) ? 'oddrow' : 'evenrow';
+            bodyRow.setAttribute('data-index', number);
             bodyRow.onmouseover = function() {
                 /**@type {Element|Node}*/ var that = this;
                 that.setAttribute('row-color', that.style.backgroundColor);
@@ -353,7 +362,7 @@ var tableFactory = function(element, config) {
     /**@type {Node|Element}*/var element_ = element;
     /**@type {Object}*/var settings_ = config;
     /**@type {Element|Node|string}*/var table_;
-    /**@type {Object|Array.<Object>}*/var data_;
+    /**@type {Array.<Object>}*/var data_ = [];
     initialize_();
     return lightTable;
 };
