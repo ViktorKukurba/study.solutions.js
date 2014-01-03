@@ -4,366 +4,452 @@
 
 /**
  * @param {Element|Node} element Container for table.
- * @param {Object} config Configuration object.
+ * @param {{columns:Array.<Object>}|undefined} config Configuration object.
  * @return {Object} LightTable object.
  * */
-var tableFactory = function(element, config) {
-    var initialize_ = function() {
-        table_ = element_.getElementsByTagName('TABLE')[0];
-        if (!table_) {
-            table_ = '<table class="ui-table">' +
-                '<colgroup></colgroup>' +
-                '<caption></caption>' +
-                '<thead><tr></tr></thead>' +
-                '<tbody></tbody></table>';
-            element_.innerHTML = table_;
-            table_ = element_.getElementsByTagName('TABLE')[0];
+var tableFactory = function (element, config) {
+  function initialize_() {
+    table_ = element_.getElementsByTagName('TABLE')[0];
+    if (!table_) {
+      table_ = '<table class="ui-table">' +
+        '<colgroup></colgroup>' +
+        '<caption></caption>' +
+        '<thead><tr></tr></thead>' +
+        '<tbody></tbody></table>';
+      element_.innerHTML = table_;
+      table_ = element_.getElementsByTagName('TABLE')[0];
+    }
+  }
+
+  /**
+   * @param {Array.<Object>} data Data list.
+   * */
+  function draw_(data) {
+    clearTable_();
+    drawHeader_();
+    drawTable_(data);
+    if (settings_.sortable) {
+      setSorting_();
+    }
+    if (settings_.editable) {
+      setEditable_();
+    }
+    if (settings_.pagination) {
+      drawFooter_();
+    }
+  }
+
+  function drawFooter_() {
+    var total = dataList_.length,
+      pagination = settings_.pagination,
+      div,
+      pagesCount = Math.ceil(total / pagination.length),
+      index = 0;
+    if (total > pagination.length) {
+      div = element_.querySelector('.lt-footer') ||
+        document.createDocumentFragment().appendChild(document.createElement('DIV'));
+      div.className = 'lt-footer';
+      div.innerHTML = 'Total: ' + total + ' | Pages: ';
+      for (; index < pagesCount; index++) {
+        div.innerHTML += '<a href="#' + index + '" >' + index + '</a>' + ' | ';
+      }
+      div.onclick = function (e) {
+        var target = e.target;
+        if (target.tagName === 'A') {
+          pagination.start = parseInt(target.innerHTML);
+          clearTableData_();
+          drawTable_();
         }
+      };
+      element_.appendChild(div);
+    }
+  }
+
+  function hasClass(className) {
+    var /**@type {Node|Element}*/ that = this,
+      /** @type {!RegExp} */
+        classNameRe = new RegExp('(?:^|\\s)' + className + '(?!\\S)');
+    return classNameRe.test(that.className);
+  }
+
+  function elementIndex(elem) {
+    var i = 0;
+    while ((elem = elem.previousSibling) !== null) {
+      ++i;
+    }
+    return i;
+  }
+
+  function removeRows_(rows) {
+    var trs = [],
+      /**@type {number}*/ i = 0,
+      /**@type {number}*/ j = 0;
+    for (; i < rows.length; i++) {
+      trs.push(table_.querySelectorAll('tbody tr')[rows[i]]);
+    }
+    for (; j < trs.length; j++) {
+      table_.querySelector('tbody').removeChild(trs[j]);
+    }
+  }
+
+  function sortHandler(e) {
+    if (e.target.tagName !== 'SPAN' || !hasClass.call(e.target, 'sort')) {
+      return;
+    }
+    var /**@type {Node|Element}*/ that = e.target,
+      /**@type {Node|Element}*/ th = that.parentNode.parentNode,
+      /**@type{string}*/
+        sortDirection = hasClass.call(that, 'desc-sort') ? '-desc' : '-asc',
+      /**@type {NodeList}*/ trs = element_.querySelectorAll('tbody tr'),
+      /** @type {Array.<Node|Element>} */
+        array = Array.prototype.slice.call(trs, 0),
+      /** @type {number} */ columnNumber = elementIndex(th),
+      /** @type {number} */
+        columnIndex = parseInt(th.getAttribute('data-column-number')),
+      /** @type {number} */ l = array.length,
+      /** @type {number} */ i = 0;
+    array.sort(function (a, b) {
+      var /** @type {string}*/
+        compare = settings_.columns[columnIndex].type + sortDirection;
+      return comparer_[compare](a, b, columnNumber + 1);
+    });
+    for (; i < l;) {
+      array[i].className = (i % 2 === 0) ? 'oddrow' : 'evenrow';
+      element_.querySelector('tbody').appendChild(array[i++]);
+    }
+    if (sortDirection === '-desc') {
+      that.className = that.className.replace('desc-sort', 'asc-sort');
+    } else {
+      that.className = that.className.replace('asc-sort', 'desc-sort');
+    }
+  }
+
+  function setSorting_() {
+    /**@type {Node|Element}*/
+    var header = table_.querySelector('thead');
+    if (header) {
+      header.onclick = sortHandler;
+    }
+  }
+
+  function setEditable_() {
+    var /**@type{Node|Element}*/ tBody = table_.querySelector('tbody');
+    tBody.onclick = function (e) {
+      if (hasClass.call(table_, 'edit-state')) {
+        table_.className = table_.className.replace('edit-state', '');
+        return;
+      }
+      table_.className += ' edit-state';
+      var /**@type{Node|Element}*/
+          td = e.target.tagName === 'TD' ? e.target : e.target.parentNode,
+        /**@type{Node|Element}*/ div = td.querySelector('div'),
+        /**@type{Node|Element}*/ input = document.createElement('input');
+      input.type = 'text';
+      input.style.width = td.style.width;
+      input.value = td.innerText || td.textContent;
+      div.style.display = 'none';
+      td.appendChild(input);
+      input.onblur = function () {
+        div.innerText = div.textContent = input.value;
+        td.removeChild(input);
+        div.style.display = 'block';
+      };
+      input.focus();
     };
+  }
 
-    /**
-     * @param {Array.<Object>} data Data list.
-     * */
-    var draw_ = function(data) {
-        //data_ = data;
-        clearTableData_();
-        drawHeader_();
-        drawTable_(data);
-        if (settings_['sortable']) setSorting_();
-        if (settings_['editable']) setEditable_();
+  function getData_() {
+    return data_;
+  }
+
+  /**
+   * @param {Object|Array.<Object>} rows
+   * */
+  function addRows_(rows) {
+    if (!Array.isArray(rows)) {
+      rows = [rows];
+    }
+    var /**@type{number}*/ i = 0,
+      /**@type{number}*/ length = rows.length,
+      /** @type {Node|Element} */
+        tbody = table_.getElementsByTagName('TBODY')[0],
+      /**@type{Array}*/ columns = settings_.columns,
+      /**@type{number}*/ trCount = tbody.querySelectorAll('tr').length,
+      /**@type {Object}*/ row,
+      /**@type {number}*/ number,
+      /**@type {Node|Element} */ bodyRow,
+      /**@type{number}*/ cLength = columns.length,
+      /**@type{number}*/ j = 0,
+      /**@type {Object}*/ column,
+      /** @type {Node|Element} */ td,
+      /** @type {Node|Element} */ div;
+    for (; i < length; i++) {
+      row = rows[i];
+      number = trCount + i;
+      data_[data_.length] = row;
+      bodyRow = tbody.insertRow(-1);
+      bodyRow.className += (number % 2 === 0) ? 'oddrow' : 'evenrow';
+      bodyRow.setAttribute('data-index', number);
+      for (j = 0; j < cLength;) {
+        column = columns[j++];
+        if (column.visible === false) {
+          continue;
+        }
+        td = bodyRow.insertCell(-1);
+        div = td.appendChild(document.createElement('DIV'));
+        td.title = row[column.prop];
+        div.innerHTML = row[column.prop];
+      }
+    }
+  }
+
+  /**
+   * Add/remove columns
+   * @private
+   * @param {Object|Array.<Object>} columns
+   * */
+  function setColumns_(columns) {
+    if (!Array.isArray(columns)) {
+      columns = [columns];
+    }
+    var /**@type{number}*/ length = columns.length,
+      /**@type{number}*/ j = 0,
+      /**@type {Element|Node}*/
+        head = table_.getElementsByTagName('THEAD')[0].firstChild,
+      /**@type {Array.<{prop:string}>}*/
+        tableColumns = settings_.columns,
+      /**@type {Object}*/ column,
+      /**@type {{prop:string}}*/ currentCol,
+      /**@type{Node|Element}*/ beforeElem,
+      /**@type{Node|Element}*/ th,
+      /**@type {number}*/ index;
+    for (; j < length;) {
+      column = columns[j++];
+      currentCol = tableColumns[column.index];
+      currentCol.visible = column.visible;
+      if (column.visible) {
+        beforeElem = getSiblingTh_(column.index);
+        th = beforeElem ? head.insertBefore(document.createElement('TH'), beforeElem) :
+          head.appendChild(document.createElement('TH'));
+        index = elementIndex(th);
+        addHeader_(currentCol, th, column.index);
+        addCellRows_(index, currentCol);
+      } else {
+        var hideTh = table_.querySelector('[data-column-number="' + column.index + '"]'),
+          tds = table_.querySelectorAll('tr td:nth-of-type(' + (column.index + 1) + ')'),
+          tdLength = tds.length,
+          i = 0;
+        hideTh.parentNode.removeChild(hideTh);
+        for (; i < tdLength;) {
+          tds[i].parentNode.removeChild(tds[i++]);
+        }
+      }
+    }
+  }
+
+  /**
+   * Clears table.
+   * @private
+   */
+  function clearTable_() {
+    var /** @type {Array.<Element|Node>} */ nodes = [
+        table_.getElementsByTagName('COLGROUP')[0],
+        table_.getElementsByTagName('THEAD')[0].firstChild,
+        table_.getElementsByTagName('TBODY')[0],
+        table_.getElementsByTagName('TFOOT')[0]
+      ],
+      /** @type {number} */ length = nodes.length,
+      /** @type {Node|Element} */ node;
+    while (length--) {
+      node = nodes[length];
+      if (node) {
+        while (node.lastChild) {
+          node.removeChild(node.lastChild);
+        }
+      }
+    }
+  }
+
+  /**
+   * Clears table data.
+   * @private
+   */
+  function clearTableData_() {
+    var /** @type {Element|Node} */
+      tbody = table_.getElementsByTagName('TBODY')[0];
+    while (tbody.lastChild) {
+      tbody.removeChild(tbody.lastChild);
+    }
+  }
+
+  /**
+   * Adds header for column
+   * @param {Object} column
+   * @param {Element|Node} th
+   * @param {number} index
+   * */
+  function addHeader_(column, th, index) {
+    var /**@type{Node|Element}*/
+        div = th.appendChild(document.createElement('DIV')),
+      /**@type{Node|Element}*/ span;
+    div.innerHTML = column.name;
+    th.setAttribute('data-column-number', index);
+    if (settings_.sortable && column.sort) {
+      th.setAttribute('data-column', column.name);
+      th.setAttribute('data-sorting', column.sort);
+      span = div.appendChild(document.createElement('span'));
+      span.className = 'sort desc-sort';
+      span.innerHTML = '&nbsp';
+    }
+  }
+
+  /**
+   * Draws header.
+   * @private
+   * */
+  function drawHeader_() {
+    var /** @type {Node|Element} */
+        row = table_.getElementsByTagName('THEAD')[0].firstChild,
+      /**@type {Array.<Object>}*/ columns = settings_.columns,
+      /**@type {number} */length = columns.length,
+      /**@type {number} */ index = 0,
+      /**@type {Object}*/ column,
+      /**@type{Node|Element}*/ th;
+    for (; index < length; index++) {
+      column = columns[index];
+      if (column.visible === false) {
+        continue;
+      }
+      th = row.appendChild(document.createElement('TH'));
+      addHeader_(column, th, index);
+    }
+  }
+
+  /**
+   * Get nex sibling th
+   * @param {number} index
+   * @return {Node|Element|null}
+   * */
+  function getSiblingTh_(index) {
+    var /**@type {NodeList}*/ ths = table_.querySelectorAll('th'),
+      /**@type {number}*/ i = 0,
+      /**@type {number}*/ length = ths.length,
+      /**@type {Node|Element}*/ item,
+      /**@type {number}*/ thIndex;
+    for (; i < length; i++) {
+      item = ths[i];
+      thIndex = item.getAttribute('data-column-number');
+      if (thIndex > index) {
+        return item;
+      }
+    }
+    return null;
+  }
+
+  function drawTable_(data) {
+    dataList_ = data || dataList_;
+    var /**@type{Node|Element}*/ tBody = table_.querySelector('tbody');
+    tBody.onmouseover = function (e) {
+      var /**@type {Element|Node}*/
+        that = (e.target.tagName === 'TD' ? e.target : e.target.parentNode).parentNode;
+      that.setAttribute('row-color', that.style.backgroundColor);
+      that.style.backgroundColor = '#ffff66';
     };
-
-    function hasClass(className) {
-        /**@type {Node|Element}*/
-        var that = this;
-        /** @type {!RegExp} */
-        var classNameRe = new RegExp('(?:^|\\s)' + className + '(?!\\S)');
-        return classNameRe.test(that.className);
-    }
-
-    function elementIndex(elem) {
-        var i = 0;
-        while ((elem = elem.previousSibling) != null) ++i;
-        return i;
-    }
-
-    var sortHandler = function() {
-        /**@type {Node|Element}*/
-        var that = this;
-        /**@type {Node|Element}*/
-        var th = that.parentNode.parentNode;
-        /**@type{string}*/
-        var sortDirection = hasClass.call(that, 'desc-sort') ? '-desc' : '-asc';
-        /**@type {NodeList}*/
-        var trs = element_.querySelectorAll('tbody tr');
-        /** @type {Array.<Node|Element>} */
-        var array = Array.prototype.slice.call(trs, 0);
-        /** @type {number} */
-        var columnNumber = elementIndex(th);
-        /** @type {number} */
-        var columnIndex = parseInt(th.getAttribute('data-column-number'));
-        array.sort(function(a, b) {
-            return comparer_[settings_['columns'][columnIndex]['type'] + sortDirection](a, b, columnNumber + 1);
-        });
-        /** @type {number} */var l = array.length;
-        /** @type {number} */var i = 0;
-        for (; i < l;) {
-            array[i].className = (i % 2 == 0) ? 'oddrow' : 'evenrow';
-            element_.querySelector('tbody').appendChild(array[i++]);
-        }
-        if (sortDirection === '-desc') {
-            that.className = that.className.replace('desc-sort', 'asc-sort');
-        } else {
-            that.className = that.className.replace('asc-sort', 'desc-sort');
-        }
+    tBody.onmouseout = function (e) {
+      var /**@type {Element}*/
+        that = (e.target.tagName === 'TD' ? e.target : e.target.parentNode).parentNode;
+      that.style.backgroundColor = that.getAttribute('row-color');
     };
+    addRows_(getPaginationRows());
+  }
 
-    var setSorting_ = function() {
-        /**@type {NodeList}*/
-        var sortedTh = element_.querySelectorAll('span.sort');
-        /** @type {number} */
-        var length = sortedTh.length;
-        if (length > 0)
-            for (/** @type {number} */var index = 0; index < length;)
-                sortedTh[index++].onclick = sortHandler;
-    };
-
-    var setEditable_ = function() {
-        /**@type{NodeList}*/
-        var tds = table_.querySelectorAll('tbody td');
-        /** @type {number} */var length = tds.length;
-        if (length > 0)
-            for (/** @type {number} */var index = 0; index < length;)
-                tds[index++].onclick = function() {
-                    /**@type{Node|Element}*/
-                    var td = this;
-                    if (hasClass.call(table_, 'edit-state')) {
-                        table_.className = table_.className.replace('edit-state', '');
-                        return;
-                    }
-                    /**@type{NodeList}*/
-                    var oldinput = td.querySelectorAll('input');
-                    if (oldinput && oldinput.length) return;
-                    /**@type{Node|Element}*/
-                    var div = td.querySelector('div');
-                    /**@type{Node|Element}*/
-                    var input = document.createElement('input');
-                    input.type = 'text';
-                    input.style.width = td.style.width;
-                    input.value = td.innerText || td.textContent;
-                    div.style.display = 'none';
-                    td.appendChild(input);
-                    input.onblur = function() {
-                        div.innerText = div.textContent = input.value;
-                        td.removeChild(input);
-                        div.style.display = 'block';
-                    };
-                    input.focus();
-                };
-    };
-
-    var comparer_ = {
-        'number-desc': function(a, b, columnIndex) {
-            var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            var tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            return parseFloat(tdb.innerText||tdb.textContent) >= parseFloat(tda.innerText||tda.textContent);
-        },
-        'number-asc': function(a, b, columnIndex) {
-            var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            var tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            return parseFloat(tda.innerText||tda.textContent) >= parseFloat(tdb.innerText||tdb.textContent);
-        },
-        'string-desc': function(a, b, columnIndex) {
-            var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            var tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            return (tdb.innerText||tdb.textContent) >= (tda.innerText||tda.textContent);
-        },
-        'string-asc': function(a, b, columnIndex) {
-            var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            var tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')');
-            return (tda.innerText || tda.textContent) >= (tdb.innerText || tdb.textContent);
-        }
-    };
-
-    var lightTable = {
-        'draw': draw_,
-        'clear': clearTableData_,
-        'addRows': addRows_,
-        'removeRows': removeRows_,
-        'setColumns': setColumns_,
-        'getData': getData_
-    };
-
-    function getData_() {
-        return data_;
+  function getPaginationRows() {
+    var pagination = settings_.pagination,
+      start;
+    if (pagination && pagination.length < dataList_.length) {
+      start = (pagination.start || 0) * pagination.length;
+      return dataList_.slice(start, start + pagination.length);
     }
+    return dataList_;
+  }
 
-    /**
-     * Adds header for column
-     * @param {Object} column
-     * @param {Element|Node} th
-     * @param {number} index
-     * */
-    function addHeader_(column, th, index) {
-        /**@type{Node|Element}*/
-        var div = th.appendChild(document.createElement('DIV'));
-        div.innerHTML = column.name;
-        th.setAttribute('data-column-number', index);
-        if (settings_['sortable'] && column.sort) {
-            th.setAttribute('data-column', column.name);
-            th.setAttribute('data-sorting', column['sort']);
-            /**@type{Node|Element}*/
-            var span = div.appendChild(document.createElement('span'));
-            span.className = 'sort desc-sort';
-            span.innerHTML = '&nbsp';
-        }
-    }
-
-    /**
-     * Draws header.
-     * @private
-     * */
-    function drawHeader_() {
-        /** @type {Node|Element} */
-        var row = table_.getElementsByTagName('THEAD')[0].firstChild;
-        /**@type {Array.<Object>}*/var columns = settings_['columns'];
-        var length = columns.length;
-        for (/**@type {number} */var index = 0; index < length; index++) {
-            /**@type {Object}*/var column = columns[index];
-            if (column['visible'] === false) continue;
-            /**@type{Node|Element}*/
-            var th = row.appendChild(document.createElement('TH'));
-            addHeader_(column, th, index);
-        }
-    }
-
-    /**
-     * Get nex sibling th
-     * @param {number} index
-     * @return {Node|Element|null}
-     * */
-    function getSiblingTh_(index) {
-        /**@type {NodeList}*/var ths = table_.querySelectorAll('th');
-        /**@type {number}*/var i = 0;
-        /**@type {number}*/var length = ths.length;
-        for (; i < length; i++) {
-            /**@type {Node|Element}*/var item = ths[i];
-            /**@type {number}*/
-            var thIndex = item.getAttribute('data-column-number');
-            if (thIndex > index)
-            return item;
-        }
-        return null;
-    }
-
-    function drawTable_(data) {
-        addRows_(data);
-    }
-
-    function removeRows_(rows) {
-        var trs = [];
-        for (var index = 0; index < rows.length; index++) {
-            trs.push(table_.querySelectorAll('tbody tr')[rows[index]]);
-        }
-        for (var index = 0; index < trs.length; index++) {
-            table_.querySelector('tbody').removeChild(trs[index]);
-        }
-    }
-
-    /**
-     * @param {Object|Array.<Object>} rows
-     * */
-    function addRows_(rows) {
-        if (!Array.isArray(rows)) rows = [rows];
-        /**@type{number}*/var i = 0;
-        /**@type{number}*/var length = rows.length;
-        /** @type {Node|Element} */
-        var tbody = table_.getElementsByTagName('TBODY')[0];
-        /**@type{Array}*/var columns = settings_['columns'];
-        var trCount = tbody.querySelectorAll('tr').length;
-        for (; i < length; i++) {
-            /**@type {Object}*/var row = rows[i];
-            /**@type {number}*/ var number = trCount + i;
-            data_[data_.length] = row;
-            /**@type {Node|Element} */
-            var bodyRow = tbody.insertRow(-1);
-            bodyRow.className += (number % 2 == 0) ? 'oddrow' : 'evenrow';
-            bodyRow.setAttribute('data-index', number);
-            bodyRow.onmouseover = function() {
-                /**@type {Element|Node}*/ var that = this;
-                that.setAttribute('row-color', that.style.backgroundColor);
-                that.style.backgroundColor = '#ffff66';
-            };
-            bodyRow.onmouseout = function() {
-                /**@type {Element}*/ var that = this;
-                that.style.backgroundColor = that.getAttribute('row-color');
-            };
-            /**@type{number}*/var cLength = columns.length;
-            /**@type{number}*/var j = 0;
-            for (; j < cLength;) {
-                /**@type {Object}*/var column = columns[j++];
-                if (column['visible'] === false) continue;
-                /** @type {Node|Element} */
-                var td = bodyRow.insertCell(-1);
-                td.title = row[column['prop']];
-                /**@type{Node|Element}*/
-                var div = td.appendChild(document.createElement('DIV'));
-                div.innerHTML = row[column['prop']];
-            }
-        }
-    }
-
-    /**
-     * Add cell
-     * @private
-     * @param {number} index
-     * @param {Object} currentCol
-     * */
-    function addCellRows_(index, currentCol) {
-        /**@type{number}*/var i = 1;
-        /**@type {Array.<Element|Node>}*/var rows = table_.rows;
-        /**@type{number}*/var length = rows.length;
-        /**@type{number}*/var cellNumber = rows[0].childNodes.length - 1;
-        for (; i < length; i++) {
-            /**@type {Element|Node}*/var row = rows[i];
-            /**@type{number|string}*/
-            var dataIndex = row.getAttribute('data-index');
-            /**@type {string|number}*/
-            var value = data_[dataIndex][currentCol['prop']];
-            /**@type {Element|Node}*/
-            var td = row.insertCell(index);
-            td.title = value;
-            /**@type{Node|Element}*/
-            var div = td.appendChild(document.createElement('DIV'));
-            div.innerHTML = value;
-        }
-    }
-
-    /**
-     * Add/remove columns
-     * @private
-     * @param {Object|Array.<Object>} columns
-     * */
-    function setColumns_(columns) {
-        if (!Array.isArray(columns)) columns = [columns];
-        /**@type{number}*/var length = columns.length;
-        /**@type{number}*/var j = 0;
+  /**
+   * Add cell
+   * @private
+   * @param {number} index
+   * @param {{prop:string}} currentCol
+   * */
+  function addCellRows_(index, currentCol) {
+    var /**@type{number}*/ i = 1,
+      /**@type {Array.<Element|Node>}*/ rows = table_.rows,
+      /**@type{number}*/ length = rows.length;
+    for (; i < length; i++) {
+      var /**@type {Element|Node}*/ row = rows[i],
+        /**@type{number|string}*/
+          dataIndex = row.getAttribute('data-index'),
+        /**@type {string|number}*/
+          value = data_[dataIndex][currentCol.prop],
         /**@type {Element|Node}*/
-        var head = table_.getElementsByTagName('THEAD')[0].firstChild;
-        /**@type {Array.<Object>}*/
-        var tableColumns = settings_['columns'];
-        for (; j < length;) {
-            /**@type {Object}*/var column = columns[j++];
-            /**@type {Object}*/var currentCol = tableColumns[column['index']];
-            currentCol['visible'] = column['visible'];
-            if (column['visible']) {
-                var beforeElem = getSiblingTh_(column['index']);
-                /**@type{Node|Element}*/
-                var th = beforeElem ? head.insertBefore(document.createElement('TH'), beforeElem) :
-                    head.appendChild(document.createElement('TH'));
-                /**@type {number}*/var index = elementIndex(th);
-                addHeader_(currentCol, th, column['index']);
-                if (settings_['sortable'] && currentCol['sort']) {
-                    th.querySelector('span.sort').onclick = sortHandler;
-                }
-                addCellRows_(index, currentCol);
-            } else {
-                var hideTh = table_.querySelector('[data-column-number="' + column['index'] + '"]');
-                hideTh.parentNode.removeChild(hideTh);
-                var tds = table_.querySelectorAll('tr td:nth-of-type(' + (column['index'] + 1) + ')');
-                var tdLength = tds.length;
-                var i = 0;
-                for (; i < tdLength;) {
-                    tds[i].parentNode.removeChild(tds[i++]);
-                }
-            }
-        }
+          td = row.insertCell(index),
+        /**@type{Node|Element}*/
+          div = td.appendChild(document.createElement('DIV'));
+      td.title = value;
+      div.innerHTML = value;
     }
-     /**
-     * Clears table.
-     * @private
-     */
-    function clearTableData_() {
-        /** @type {Array.<Element|Node>} */var nodes = [
-            table_.getElementsByTagName('COLGROUP')[0],
-            table_.getElementsByTagName('THEAD')[0].firstChild,
-            table_.getElementsByTagName('TBODY')[0],
-            table_.getElementsByTagName('TFOOT')[0]
-        ];
-        /** @type {number} */ var length = nodes.length;
-        while (length--) {
-            /** @type {Node|Element} */var node = nodes[length];
-            if (node) {
-                while (node.lastChild) node.removeChild(node.lastChild);
-            }
-        }
-    }
+  }
 
-    /**@type {Node|Element}*/var element_ = element;
-    /**@type {Object}*/var settings_ = config;
-    /**@type {Element|Node|string}*/var table_;
-    /**@type {Array.<Object>}*/var data_ = [];
-    initialize_();
-    return lightTable;
+  var comparer_ = {
+      'number-desc': function (a, b, columnIndex) {
+        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          valueA = tda.innerText || tda.textContent,
+          valueB = tdb.innerText || tdb.textContent;
+        return parseFloat(valueB) >= parseFloat(valueA);
+      },
+      'number-asc': function (a, b, columnIndex) {
+        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          valueA = tda.innerText || tda.textContent,
+          valueB = tdb.innerText || tdb.textContent;
+        return parseFloat(valueA) >= parseFloat(valueB);
+      },
+      'string-desc': function (a, b, columnIndex) {
+        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          valueA = tda.innerText || tda.textContent,
+          valueB = tdb.innerText || tdb.textContent;
+        return valueB >= valueA;
+      },
+      'string-asc': function (a, b, columnIndex) {
+        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
+          valueA = tda.innerText || tda.textContent,
+          valueB = tdb.innerText || tdb.textContent;
+        return valueA >= valueB;
+      }
+    },
+    /**@type {{draw:function()}}*/
+      lightTable = {
+      'draw': draw_,
+      'clear': clearTable_,
+      'addRows': function (rows) {
+        dataList_.push(rows);
+        if (settings_.pagination && settings_.pagination.length < dataList_.length) {
+          drawFooter_();
+        } else{
+          addRows_(rows);
+        }
+      },
+      'removeRows': removeRows_,
+      'setColumns': setColumns_,
+      'getData': getData_
+    },
+    /**@type {Node|Element|undefined}*/ element_ = element,
+    /**@type {{columns:Array.<Object>}|undefined}*/ settings_ = config,
+    /**@type {Element|Node|string}*/ table_,
+    /**@type {Array.<Object>}*/ data_ = [],
+    /**@type {Array.<Object>}*/ dataList_ = [];
+  initialize_();
+  return lightTable;
 };
 window['lightTable'] = tableFactory;
