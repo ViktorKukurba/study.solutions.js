@@ -22,6 +22,7 @@ var tableFactory = function (element, config) {
   }
 
   /**
+   * Draws table.
    * @param {Array.<Object>} data Data list.
    * */
   function draw_(data) {
@@ -39,15 +40,19 @@ var tableFactory = function (element, config) {
     }
   }
 
+  /**
+   * Draws footer.
+   * */
   function drawFooter_() {
-    var total = dataList_.length,
-      pagination = settings_.pagination,
-      div,
-      pagesCount = Math.ceil(total / pagination.length),
-      index = 0;
+    var /**@type {number}*/ total = dataList_.length,
+      /**@type {Object}*/ pagination = settings_.pagination,
+      /**@type {Node|Element}*/ div,
+      /**@type {number}*/ pagesCount = Math.ceil(total / pagination.length),
+      /**@type {number}*/ index = 0;
     if (total > pagination.length) {
       div = element_.querySelector('.lt-footer') ||
-        document.createDocumentFragment().appendChild(document.createElement('DIV'));
+        document.createDocumentFragment()
+          .appendChild(document.createElement('DIV'));
       div.className = 'lt-footer';
       div.innerHTML = 'Total: ' + total + ' | Pages: ';
       for (; index < pagesCount; index++) {
@@ -100,27 +105,43 @@ var tableFactory = function (element, config) {
       /**@type {Node|Element}*/ th = that.parentNode.parentNode,
       /**@type{string}*/
         sortDirection = hasClass.call(that, 'desc-sort') ? '-desc' : '-asc',
-      /**@type {NodeList}*/ trs = element_.querySelectorAll('tbody tr'),
-      /** @type {Array.<Node|Element>} */
-        array = Array.prototype.slice.call(trs, 0),
-      /** @type {number} */ columnNumber = elementIndex(th),
-      /** @type {number} */
-        columnIndex = parseInt(th.getAttribute('data-column-number')),
-      /** @type {number} */ l = array.length,
-      /** @type {number} */ i = 0;
-    array.sort(function (a, b) {
-      var /** @type {string}*/
-        compare = settings_.columns[columnIndex].type + sortDirection;
-      return comparer_[compare](a, b, columnNumber + 1);
-    });
-    for (; i < l;) {
-      array[i].className = (i % 2 === 0) ? 'oddrow' : 'evenrow';
-      element_.querySelector('tbody').appendChild(array[i++]);
+      /** @type {number} */ columnIndex;
+    if (settings_.pagination) {
+      columnIndex = parseInt(th.getAttribute('data-column-number'));
+      dataList_.sort(function (a, b) {
+        var /** @type {string}*/
+          compare = settings_.columns[columnIndex].type + sortDirection;
+        return valComparer_[compare](a, b, settings_.columns[columnIndex].prop);
+      });
+      clearTableData_();
+      drawTable_();
+    } else {
+      sortTrs_(th,sortDirection);
     }
     if (sortDirection === '-desc') {
       that.className = that.className.replace('desc-sort', 'asc-sort');
     } else {
       that.className = that.className.replace('asc-sort', 'desc-sort');
+    }
+  }
+
+  function sortTrs_(th, sortDirection){
+    var /**@type {NodeList}*/ trs = element_.querySelectorAll('tbody tr'),
+      /** @type {Array.<Node|Element>} */
+        array = Array.prototype.slice.call(trs, 0),
+      /** @type {number} */ i = 0,
+      /** @type {number} */ columnNumber = elementIndex(th),
+      /** @type {number} */
+        columnIndex = parseInt(th.getAttribute('data-column-number')),
+      /** @type {number} */ l = array.length;
+    array.sort(function (a, b) {
+      var /** @type {string}*/
+        compare = settings_.columns[columnIndex].type + sortDirection;
+      return trComparer_[compare](a, b, columnNumber + 1);
+    });
+    for (; i < l;) {
+      array[i].className = (i % 2 === 0) ? 'oddrow' : 'evenrow';
+      element_.querySelector('tbody').appendChild(array[i++]);
     }
   }
 
@@ -222,23 +243,31 @@ var tableFactory = function (element, config) {
       /**@type {{prop:string}}*/ currentCol,
       /**@type{Node|Element}*/ beforeElem,
       /**@type{Node|Element}*/ th,
-      /**@type {number}*/ index;
+      /**@type {number}*/ index,
+      /**@type{Node|Element}*/ hideTh,
+      /**@type{NodeList}*/tds,
+      /**@type {number}*/ i,
+      /**@type {number}*/ tdLength;
     for (; j < length;) {
       column = columns[j++];
       currentCol = tableColumns[column.index];
       currentCol.visible = column.visible;
       if (column.visible) {
         beforeElem = getSiblingTh_(column.index);
-        th = beforeElem ? head.insertBefore(document.createElement('TH'), beforeElem) :
-          head.appendChild(document.createElement('TH'));
+        th = document.createElement('TH');
+        if (beforeElem) {
+          head.insertBefore(th, beforeElem);
+        } else {
+          head.appendChild(th);
+        }
         index = elementIndex(th);
         addHeader_(currentCol, th, column.index);
         addCellRows_(index, currentCol);
       } else {
-        var hideTh = table_.querySelector('[data-column-number="' + column.index + '"]'),
-          tds = table_.querySelectorAll('tr td:nth-of-type(' + (column.index + 1) + ')'),
-          tdLength = tds.length,
-          i = 0;
+        hideTh = table_.querySelector('[data-column-number="' + column.index + '"]');
+        tds = table_.querySelectorAll('tr td:nth-of-type(' + (column.index + 1) + ')');
+        tdLength = tds.length;
+        i = 0;
         hideTh.parentNode.removeChild(hideTh);
         for (; i < tdLength;) {
           tds[i].parentNode.removeChild(tds[i++]);
@@ -350,14 +379,16 @@ var tableFactory = function (element, config) {
     dataList_ = data || dataList_;
     var /**@type{Node|Element}*/ tBody = table_.querySelector('tbody');
     tBody.onmouseover = function (e) {
-      var /**@type {Element|Node}*/
-        that = (e.target.tagName === 'TD' ? e.target : e.target.parentNode).parentNode;
+      var /**@type {Element|Node}*/ elem = e.target,
+        /**@type {Element|Node}*/
+          that = (elem.tagName === 'TD' ? elem : elem.parentNode).parentNode;
       that.setAttribute('row-color', that.style.backgroundColor);
       that.style.backgroundColor = '#ffff66';
     };
     tBody.onmouseout = function (e) {
-      var /**@type {Element}*/
-        that = (e.target.tagName === 'TD' ? e.target : e.target.parentNode).parentNode;
+      var /**@type {Element|Node}*/ elem = e.target,
+        /**@type {Element}*/
+          that = (elem.tagName === 'TD' ? elem : elem.parentNode).parentNode;
       that.style.backgroundColor = that.getAttribute('row-color');
     };
     addRows_(getPaginationRows());
@@ -382,23 +413,31 @@ var tableFactory = function (element, config) {
   function addCellRows_(index, currentCol) {
     var /**@type{number}*/ i = 1,
       /**@type {Array.<Element|Node>}*/ rows = table_.rows,
-      /**@type{number}*/ length = rows.length;
+      /**@type{number}*/ length = rows.length,
+      /**@type {Element|Node}*/ row,
+      /**@type{number|string}*/
+        dataIndex,
+      /**@type {string|number}*/
+        value,
+      /**@type {Element|Node}*/
+        td,
+      /**@type{Node|Element}*/
+        div;
     for (; i < length; i++) {
-      var /**@type {Element|Node}*/ row = rows[i],
-        /**@type{number|string}*/
-          dataIndex = row.getAttribute('data-index'),
-        /**@type {string|number}*/
-          value = data_[dataIndex][currentCol.prop],
-        /**@type {Element|Node}*/
-          td = row.insertCell(index),
-        /**@type{Node|Element}*/
-          div = td.appendChild(document.createElement('DIV'));
+      row = rows[i];
+      dataIndex = row.getAttribute('data-index');
+      /**@type {string|number}*/
+      value = data_[dataIndex][currentCol.prop];
+      /**@type {Element|Node}*/
+      td = row.insertCell(index);
+      /**@type{Node|Element}*/
+      div = td.appendChild(document.createElement('DIV'));
       td.title = value;
       div.innerHTML = value;
     }
   }
 
-  var comparer_ = {
+  var trComparer_ = {
       'number-desc': function (a, b, columnIndex) {
         var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
           tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
@@ -428,15 +467,38 @@ var tableFactory = function (element, config) {
         return valueA >= valueB;
       }
     },
+    valComparer_ = {
+      'number-desc': function (a, b, property) {
+        var valueA = a[property],
+          valueB = b[property];
+        return parseFloat(valueB) >= parseFloat(valueA);
+      },
+      'number-asc': function (a, b, property) {
+        var valueA = a[property],
+          valueB = b[property];
+        return parseFloat(valueA) >= parseFloat(valueB);
+      },
+      'string-desc': function (a, b, property) {
+        var valueA = a[property],
+          valueB = b[property];
+        return valueB >= valueA;
+      },
+      'string-asc': function (a, b, property) {
+        var valueA = a[property],
+          valueB = b[property];
+        return valueA >= valueB;
+      }
+    },
     /**@type {{draw:function()}}*/
       lightTable = {
       'draw': draw_,
       'clear': clearTable_,
       'addRows': function (rows) {
         dataList_.push(rows);
-        if (settings_.pagination && settings_.pagination.length < dataList_.length) {
+        var pag = settings_.pagination;
+        if (pag && pag.length < dataList_.length) {
           drawFooter_();
-        } else{
+        } else {
           addRows_(rows);
         }
       },
@@ -452,4 +514,4 @@ var tableFactory = function (element, config) {
   initialize_();
   return lightTable;
 };
-window['lightTable'] = tableFactory;
+window.lightTable = tableFactory;
