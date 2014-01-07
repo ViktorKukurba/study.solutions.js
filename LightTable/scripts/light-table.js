@@ -4,10 +4,15 @@
 
 /**
  * @param {Element|Node} element Container for table.
- * @param {{columns:Array.<Object>}|undefined} config Configuration object.
+ * @param {{columns:Array.<Object>,
+ * pagination:Object,
+ * sortable:boolean,
+ * editable:boolean}|undefined}
+  config Configuration object.
  * @return {Object} LightTable object.
  * */
 var tableFactory = function (element, config) {
+  'use strict';
   function initialize_() {
     table_ = element_.getElementsByTagName('TABLE')[0];
     if (!table_) {
@@ -70,15 +75,14 @@ var tableFactory = function (element, config) {
     }
   }
 
-  function hasClass(className) {
-    var /**@type {Node|Element}*/ that = this,
-      /** @type {!RegExp} */
-        classNameRe = new RegExp('(?:^|\\s)' + className + '(?!\\S)');
-    return classNameRe.test(that.className);
+  function hasClass(elem, className) {
+    var /** @type {!RegExp} */
+      classNameRe = new RegExp('(?:^|\\s)' + className + '(?!\\S)');
+    return classNameRe.test(elem.className);
   }
 
   function elementIndex(elem) {
-    var i = 0;
+    var /** @type {number}*/ i = 0;
     while ((elem = elem.previousSibling) !== null) {
       ++i;
     }
@@ -98,46 +102,48 @@ var tableFactory = function (element, config) {
   }
 
   function sortHandler(e) {
-    if (e.target.tagName !== 'SPAN' || !hasClass.call(e.target, 'sort')) {
+    if (e.target.tagName !== 'SPAN' || !hasClass(e.target, 'sort')) {
       return;
     }
     var /**@type {Node|Element}*/ that = e.target,
       /**@type {Node|Element}*/ th = that.parentNode.parentNode,
       /**@type{string}*/
-        sortDirection = hasClass.call(that, 'desc-sort') ? '-desc' : '-asc',
+        direction = hasClass(that, 'desc-sort') ? 'desc' : 'asc',
       /** @type {number} */ columnIndex;
     if (settings_.pagination) {
       columnIndex = parseInt(th.getAttribute('data-column-number'));
       dataList_.sort(function (a, b) {
-        var /** @type {string}*/
-          compare = settings_.columns[columnIndex].type + sortDirection;
-        return valComparer_[compare](a, b, settings_.columns[columnIndex].prop);
+        return valCompare_[direction](a, b, settings_.columns[columnIndex]);
       });
       clearTableData_();
       drawTable_();
     } else {
-      sortTrs_(th,sortDirection);
+      sortTrs_(th, direction);
     }
-    if (sortDirection === '-desc') {
+    if (direction === 'desc') {
       that.className = that.className.replace('desc-sort', 'asc-sort');
     } else {
       that.className = that.className.replace('asc-sort', 'desc-sort');
     }
   }
 
-  function sortTrs_(th, sortDirection){
+  function sortTrs_(th, direction) {
     var /**@type {NodeList}*/ trs = element_.querySelectorAll('tbody tr'),
       /** @type {Array.<Node|Element>} */
         array = Array.prototype.slice.call(trs, 0),
       /** @type {number} */ i = 0,
-      /** @type {number} */ columnNumber = elementIndex(th),
+      /** @type {number} */ columnNumber = elementIndex(th) + 1,
       /** @type {number} */
         columnIndex = parseInt(th.getAttribute('data-column-number')),
       /** @type {number} */ l = array.length;
     array.sort(function (a, b) {
-      var /** @type {string}*/
-        compare = settings_.columns[columnIndex].type + sortDirection;
-      return trComparer_[compare](a, b, columnNumber + 1);
+      var /**@type {Node|Element}*/
+          tda = a.querySelector('tr td:nth-of-type(' + columnNumber + ')'),
+        /**@type {Node|Element}*/
+          tdb = b.querySelector('tr td:nth-of-type(' + columnNumber + ')'),
+        /**@type {number}*/ valA = tda.innerText || tda.textContent,
+        /**@type {number}*/ valB = tdb.innerText || tdb.textContent;
+      return valCompare_[direction](valA, valB, settings_.columns[columnIndex]);
     });
     for (; i < l;) {
       array[i].className = (i % 2 === 0) ? 'oddrow' : 'evenrow';
@@ -156,7 +162,7 @@ var tableFactory = function (element, config) {
   function setEditable_() {
     var /**@type{Node|Element}*/ tBody = table_.querySelector('tbody');
     tBody.onclick = function (e) {
-      if (hasClass.call(table_, 'edit-state')) {
+      if (hasClass(table_, 'edit-state')) {
         table_.className = table_.className.replace('edit-state', '');
         return;
       }
@@ -193,9 +199,9 @@ var tableFactory = function (element, config) {
     var /**@type{number}*/ i = 0,
       /**@type{number}*/ length = rows.length,
       /** @type {Node|Element} */
-        tbody = table_.getElementsByTagName('TBODY')[0],
-      /**@type{Array}*/ columns = settings_.columns,
-      /**@type{number}*/ trCount = tbody.querySelectorAll('tr').length,
+        tBody = table_.getElementsByTagName('TBODY')[0],
+      /**@type{Array.<Object>}*/ columns = settings_.columns,
+      /**@type{number}*/ trCount = tBody.querySelectorAll('tr').length,
       /**@type {Object}*/ row,
       /**@type {number}*/ number,
       /**@type {Node|Element} */ bodyRow,
@@ -208,7 +214,7 @@ var tableFactory = function (element, config) {
       row = rows[i];
       number = trCount + i;
       data_[data_.length] = row;
-      bodyRow = tbody.insertRow(-1);
+      bodyRow = tBody.insertRow(-1);
       bodyRow.className += (number % 2 === 0) ? 'oddrow' : 'evenrow';
       bodyRow.setAttribute('data-index', number);
       for (j = 0; j < cLength;) {
@@ -244,16 +250,17 @@ var tableFactory = function (element, config) {
       /**@type{Node|Element}*/ beforeElem,
       /**@type{Node|Element}*/ th,
       /**@type {number}*/ index,
-      /**@type{Node|Element}*/ hideTh,
+      /**@type {number}*/ colIndex,
       /**@type{NodeList}*/tds,
       /**@type {number}*/ i,
       /**@type {number}*/ tdLength;
     for (; j < length;) {
       column = columns[j++];
-      currentCol = tableColumns[column.index];
+      colIndex = column.index;
+      currentCol = tableColumns[colIndex];
       currentCol.visible = column.visible;
       if (column.visible) {
-        beforeElem = getSiblingTh_(column.index);
+        beforeElem = getSiblingTh_(colIndex);
         th = document.createElement('TH');
         if (beforeElem) {
           head.insertBefore(th, beforeElem);
@@ -261,14 +268,14 @@ var tableFactory = function (element, config) {
           head.appendChild(th);
         }
         index = elementIndex(th);
-        addHeader_(currentCol, th, column.index);
+        addHeader_(currentCol, th, colIndex);
         addCellRows_(index, currentCol);
       } else {
-        hideTh = table_.querySelector('[data-column-number="' + column.index + '"]');
-        tds = table_.querySelectorAll('tr td:nth-of-type(' + (column.index + 1) + ')');
+        th = table_.querySelector('[data-column-number="' + colIndex + '"]');
+        tds = table_.querySelectorAll('tr td:nth-of-type(' + (colIndex + 1) + ')');
         tdLength = tds.length;
         i = 0;
-        hideTh.parentNode.removeChild(hideTh);
+        th.parentNode.removeChild(th);
         for (; i < tdLength;) {
           tds[i].parentNode.removeChild(tds[i++]);
         }
@@ -387,7 +394,7 @@ var tableFactory = function (element, config) {
     };
     tBody.onmouseout = function (e) {
       var /**@type {Element|Node}*/ elem = e.target,
-        /**@type {Element}*/
+        /**@type {Element|Node}*/
           that = (elem.tagName === 'TD' ? elem : elem.parentNode).parentNode;
       that.style.backgroundColor = that.getAttribute('row-color');
     };
@@ -395,8 +402,8 @@ var tableFactory = function (element, config) {
   }
 
   function getPaginationRows() {
-    var pagination = settings_.pagination,
-      start;
+    var /**@type {Object}*/ pagination = settings_.pagination,
+      /**@type {number}*/start;
     if (pagination && pagination.length < dataList_.length) {
       start = (pagination.start || 0) * pagination.length;
       return dataList_.slice(start, start + pagination.length);
@@ -426,76 +433,60 @@ var tableFactory = function (element, config) {
     for (; i < length; i++) {
       row = rows[i];
       dataIndex = row.getAttribute('data-index');
-      /**@type {string|number}*/
       value = data_[dataIndex][currentCol.prop];
-      /**@type {Element|Node}*/
       td = row.insertCell(index);
-      /**@type{Node|Element}*/
       div = td.appendChild(document.createElement('DIV'));
       td.title = value;
       div.innerHTML = value;
     }
   }
 
-  var trComparer_ = {
-      'number-desc': function (a, b, columnIndex) {
-        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          valueA = tda.innerText || tda.textContent,
-          valueB = tdb.innerText || tdb.textContent;
-        return parseFloat(valueB) >= parseFloat(valueA);
+  var comparator_ = Object.create(null, {
+      number: { value: function (a, b, asc) {
+        if (asc) {
+          return parseFloat(a) >= parseFloat(b);
+        } else {
+          return parseFloat(b) >= parseFloat(a);
+        }
       },
-      'number-asc': function (a, b, columnIndex) {
-        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          valueA = tda.innerText || tda.textContent,
-          valueB = tdb.innerText || tdb.textContent;
-        return parseFloat(valueA) >= parseFloat(valueB);
+        enumerable: true
       },
-      'string-desc': function (a, b, columnIndex) {
-        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          valueA = tda.innerText || tda.textContent,
-          valueB = tdb.innerText || tdb.textContent;
-        return valueB >= valueA;
+      string: {value: function (a, b, asc) {
+        if (asc) {
+          return a >= b;
+        } else {
+          return b >= a;
+        }
       },
-      'string-asc': function (a, b, columnIndex) {
-        var tda = a.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          tdb = b.querySelector('tr td:nth-of-type(' + columnIndex + ')'),
-          valueA = tda.innerText || tda.textContent,
-          valueB = tdb.innerText || tdb.textContent;
-        return valueA >= valueB;
+        enumerable: true
       }
-    },
-    valComparer_ = {
-      'number-desc': function (a, b, property) {
-        var valueA = a[property],
-          valueB = b[property];
-        return parseFloat(valueB) >= parseFloat(valueA);
+    }),
+
+    valCompare_ = Object.create(null, {
+      'desc': {value: function (a, b, column) {
+        var /**@type {number|string}*/ valueA = a[column.prop] || a,
+          /**@type {number|string}*/ valueB = b[column.prop] || b;
+        return comparator_[column.type](valueA, valueB);
       },
-      'number-asc': function (a, b, property) {
-        var valueA = a[property],
-          valueB = b[property];
-        return parseFloat(valueA) >= parseFloat(valueB);
+        enumerable: true
       },
-      'string-desc': function (a, b, property) {
-        var valueA = a[property],
-          valueB = b[property];
-        return valueB >= valueA;
+      'asc': { value: function (a, b, column) {
+        var /**@type {number|string}*/ valueA = a[column.prop] || a,
+          /**@type {number|string}*/ valueB = b[column.prop] || b;
+        return comparator_[column.type](valueA, valueB, true);
       },
-      'string-asc': function (a, b, property) {
-        var valueA = a[property],
-          valueB = b[property];
-        return valueA >= valueB;
+        enumerable: true
       }
-    },
-    /**@type {{draw:function()}}*/
+    }),
+    /**@type {{draw:function(),
+    * clear:function(),
+    * addRows:function(Array.<Object>)}}*/
       lightTable = {
       'draw': draw_,
       'clear': clearTable_,
       'addRows': function (rows) {
         dataList_.push(rows);
-        var pag = settings_.pagination;
+        var /**@type {?Object}*/pag = settings_.pagination;
         if (pag && pag.length < dataList_.length) {
           drawFooter_();
         } else {
@@ -507,11 +498,15 @@ var tableFactory = function (element, config) {
       'getData': getData_
     },
     /**@type {Node|Element|undefined}*/ element_ = element,
-    /**@type {{columns:Array.<Object>}|undefined}*/ settings_ = config,
+    /**@type {{columns:Array.<Object>,
+    * pagination:Object,
+    * sortable:boolean,
+    * editable:boolean}|undefined}*/
+      settings_ = config,
     /**@type {Element|Node|string}*/ table_,
     /**@type {Array.<Object>}*/ data_ = [],
     /**@type {Array.<Object>}*/ dataList_ = [];
   initialize_();
   return lightTable;
 };
-window.lightTable = tableFactory;
+window['lightTable'] = tableFactory;
