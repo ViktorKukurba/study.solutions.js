@@ -1,0 +1,54 @@
+﻿body {
+    background-color: #BFE7E5;
+}
+
+#page-wrapper {
+    margin: auto;
+    max-width: 960px;
+    border-radius: 10px;
+    background-color: white;
+}
+article {
+    padding: 10px;
+    margin: 5px;
+    clear: both;
+    border: skyblue solid 2px;
+    border-radius: 10px;
+}
+article header {
+    text-align: center;
+}
+article footer {
+    text-align: right;
+}
+#page-wrapper>header {
+    float: right;
+    padding: 10px 5px;
+}
+
+#header-title img {
+    border-radius: 10px;
+    width: 100%;
+    
+}
+#header {
+    padding: 10px;
+    border: skyblue solid 2px;
+    border-radius: 10px;
+}
+article img {
+    text-align: center;
+    border-radius: 5px;
+}
+#login {
+    float: right;
+}
+#title {
+    float: left;
+    text-align: center;
+    font:italic bold 12px/25px Georgia, serif;
+}
+.events {
+    text-align: center;
+    font:italic bold 20px/35px Georgia, serif;
+}
