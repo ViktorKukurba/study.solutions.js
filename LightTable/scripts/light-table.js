@@ -2,18 +2,23 @@
  * Created by Viktor Kukurba on 12/10/13.
  */
 
+
+/**@typedef {{columns:Array.<Object>,
+    pagination:Object,
+    sortable:boolean,
+    editable:boolean}}*/
+var settings_;
+
 /**
  * @param {Element|Node} element Container for table.
- * @param {{columns:Array.<Object>,
- * pagination:Object,
- * sortable:boolean,
- * editable:boolean}|undefined}
+ * @param {settings_}
   config Configuration object.
  * @return {Object} LightTable object.
  * */
 var tableFactory = function (element, config) {
   'use strict';
   function initialize_() {
+    settings_ = config;
     table_ = element_.getElementsByTagName('TABLE')[0];
     if (!table_) {
       table_ = '<table class="ui-table">' +
@@ -498,11 +503,6 @@ var tableFactory = function (element, config) {
       'getData': getData_
     },
     /**@type {Node|Element|undefined}*/ element_ = element,
-    /**@type {{columns:Array.<Object>,
-    * pagination:Object,
-    * sortable:boolean,
-    * editable:boolean}|undefined}*/
-      settings_ = config,
     /**@type {Element|Node|string}*/ table_,
     /**@type {Array.<Object>}*/ data_ = [],
     /**@type {Array.<Object>}*/ dataList_ = [];

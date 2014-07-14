@@ -3,7 +3,7 @@ rm -rf ../scripts/compiled.js
 touch ../scripts/compiled.js
 chmod 0666 ../scripts/compiled.js
 java -jar ./closure-compiler.jar \
---compilation_level SIMPLE_OPTIMIZATIONS \
+--compilation_level ADVANCED_OPTIMIZATIONS \
 --warning_level VERBOSE \
 --charset UTF-8 \
 --third_party \

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <input id="pattern" type="text"/>
+    <input id="test" type="text"/><button id="btn">Test</button>
+    <span id="result"></span>
+</div>
+<script type="application/javascript">
+    var btn = document.getElementById('btn');
+    btn.onclick = function(){
+        var pattern = new RegExp(document.getElementById('pattern').value, 'i');
+        var test = document.getElementById('test');
+        document.getElementById('result').innerHTML = pattern.test(test.value);
+    }
+
+</script>
+</body>
+</html>
