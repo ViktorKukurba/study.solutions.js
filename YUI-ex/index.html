@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--<script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>-->
+    <!--<script src="main.js"></script>-->
+    <script>
+
+
+//        YUI().use('test', function (Y) {
+//            var testCase = new Y.Test.Case({
+//                name: 'My Test Case',
+//                test1: function () {
+//                    Y.Assert.areEqual(10, 10);
+//                },
+//                test2: function () {
+//                    Y.Assert.isArray([1, 2, 3]);
+//                }
+//            });
+//            Y.Test.Runner.add(testCase);
+//            Y.Test.Runner.run();
+//        });
+
+//YUI().use('tabview', 'router', function(Y) {
+//    var tabview = new Y.TabView({
+//        srcNode: '#demo'
+//    });
+//    tabview.on('selectionChange', Y.bind(function(e) {
+//        var tab = e.newVal.get('index');
+//        console.log('test-sel', tab);
+//    },this));
+//    tabview.render();
+//    var router = new Y.Router({
+//        html5:false,
+//        root : '/study.solutions.js/YUI-ex/',
+//        routes: [
+//            {path: '/foo',    callbacks: function () { console.log('Hello!'); }},
+//            {path: '/val', callbacks: function () { console.log('foo'); }},
+//            {path: '/val/val2', callbacks: function () { console.log('baz'); }}
+//        ]
+//    });
+//    router.dispatch();
+//
+//});
+</script>
+    <title>YUI Example</title>
+</head>
+<body>
+<div id="test1"></div>
+<div id="demo">
+    <ul>
+        <li><a id="a1" href="#/foo">foo</a></li>
+        <li><a id="a2" href="#/val">foo2</a></li>
+        <li><a id="a3" href="#/val/val2">foo3</a></li>
+    </ul>
+    <div>
+        <div id="/foo">foo content</div>
+        <div id="/val">bar content</div>
+        <div id="/val/val2">baz content</div>
+    </div>
+</div>
+</body>
+</html>

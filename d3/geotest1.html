@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#states {
+  fill: #aaa;
+}
+
+#states .active {
+  fill: green;
+}
+text {
+    fill: white;
+}
+text.active{
+    fill: black;
+}
+
+#state-borders {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+</style>
+<body>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/topojson.v1.min.js"></script>
+<!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
+<!--<script src="http://d3js.org/topojson.v1.min.js"></script>-->
+<script>
+
+var width = 960,
+    height = 500,
+    centered,
+    contains = function(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            console.log(a,obj);
+            return true;
+        }
+    }
+    return false;
+}
+
+var projection = d3.geo.albersUsa()
+    .scale(1070)
+    .translate([width / 2, height / 2]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    //.on("click", clicked);
+
+var g = svg.append("g");
+
+var states = ["01", "04", "07", "22", "50", "43"];
+
+//d3.json("json/uscounties.json", function(error, us) {
+d3.json("json/us2.json", function(error, us) {
+    //draw1(error, us);
+    draw1(error, us);
+});
+
+function draw0(error, us){
+    var g = svg.append("g");
+
+    var states = ["01", "04", "07", "22", "50", "43"];
+    g.append("g")
+            .attr("id", "states")
+            .selectAll("path")
+            .data(topojson.feature(us, us.objects.states).features)
+            .enter().append("path")
+            .attr("d", path)
+            //.on("click", clicked);
+
+    g.append("path")
+            .datum(topojson.mesh(us, us.objects.states, function(a, b) {
+                return a !== b; }))
+            .attr("id", "state-borders")
+            .attr("d", path).attr('title', 'test');
+    g.selectAll("path").classed("active",function(d){
+        console.log(d.properties);
+        if(d.properties){
+            return contains(states, d.properties.GEOID10);
+        }else{
+            console.log("empty",d);
+        }
+    });
+    g.selectAll("text")
+            .data(topojson.feature(us, us.objects.states).features)
+            .enter()
+            .append("svg:text")//.style("fill", "White")
+            .text(function(d){
+                console.log(d);
+                console.log(d.properties.STUSPS10);
+                return d.properties.STUSPS10;
+            })
+            .attr("x", function(d){
+                return path.centroid(d)[0];
+            })
+            .attr("y", function(d){
+                return  path.centroid(d)[1];
+            })
+            .attr("text-anchor","middle")
+            .attr('font-size','6pt').classed("active",function(d){
+                return contains(states, d.properties.GEOID10);
+            });
+    g.selectAll("path").on('mouseover', function(e){
+        console.log(e);
+    });
+}
+
+function draw1(error, us){
+    console.log(us.objects.counties);
+    g.append("g")
+            .attr("id", "states")
+            .selectAll("path")
+            .data(topojson.feature(us, us.objects.counties).features)
+            .enter().append("path")
+            .attr("d", path)
+            //.on("click", clicked);
+
+    g.append("path")
+            .datum(topojson.mesh(us, us.objects.counties, function(a, b) {
+                return a !== b; }))
+            .attr("id", "state-borders")
+            .attr("d", path).attr('title', 'test');
+//    g.selectAll("path").classed("active",function(d){
+//        return contains(states, d.id);
+//    });
+//    g.selectAll("text")
+//            .data(topojson.feature(us, us.objects.counties).features)
+//            .enter()
+//            .append("svg:text")//.style("fill", "White")
+//            .text(function(d){
+//                return 'State'+ d.id;
+//            })
+//            .attr("x", function(d){
+//                return path.centroid(d)[0];
+//            })
+//            .attr("y", function(d){
+//                return  path.centroid(d)[1];
+//            })
+//            .attr("text-anchor","middle")
+//            .attr('font-size','6pt').classed("active",function(d){
+//                return contains(states, d.id);
+//            });
+    g.selectAll("path").on('mouseover', function(e){
+        console.log(e);
+    });
+}
+
+function clicked(d) {
+  var x, y, k;
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    x = centroid[0];
+    y = centroid[1];
+    k = 4;
+    centered = d;
+  } else {
+    x = width / 2;
+    y = height / 2;
+    k = 1;
+    centered = null;
+  }
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+
+  g.transition()
+      .duration(750)
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      .style("stroke-width", 1.5 / k + "px");
+}
+
+</script>

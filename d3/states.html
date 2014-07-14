@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/topojson.v1.min.js"></script>
+    <script src="js/geochart.js"></script>
+    <style>
+        .background {
+            fill: none;
+            pointer-events: all;
+        }
+
+        path {
+            fill: #aaa;
+            stroke: white;
+            stroke-width: .9px;
+        }
+        path.county {
+            fill: #aaa;
+            stroke: white;
+            stroke-width: .5px;
+            opacity:0.5;
+        }
+
+        #states .active {
+            fill: green;
+        }
+        #counties .active {
+            fill: green;
+        }
+
+        text {
+            fill: white;
+        }
+
+        text.active {
+            fill: black;
+        }
+
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 12px;
+            color: #444;
+            background: #fff;
+            border: 1px solid #aaa;
+            box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+            border-radius: 3px;
+            z-index: 1000;
+        }
+
+        .tooltip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 5px;
+            line-height: 1;
+            color: #fff;
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+            bottom: -8px;
+            left: 50%;
+            margin-left: -5px;
+        }
+
+        #market-chart {
+            margin: 0 0 0 -30px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+<div id="market-chart">
+    <svg></svg>
+</div>
+<script>
+    GeoChart.init();
+</script>
+</body>
+</html>

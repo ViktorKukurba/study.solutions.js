@@ -66,7 +66,6 @@ window.onload = function () {
     }
 
     assert(true, 'singleton namespace');
-    debugger;
     assert(true, singletonNS.greetMethod());
     assert(true, singletonNS.giveNumber());
 
