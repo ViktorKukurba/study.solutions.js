@@ -33,7 +33,7 @@ function checkLoginState() {
 
 window.fbAsyncInit = function () {
     FB.init({
-        appId: '237271143059295',
+        appId: '380038068742752',
         cookie: true,  // enable cookies to allow the server to access
         // the session
         xfbml: true,  // parse social plugins on this page
@@ -77,12 +77,34 @@ function testAPI() {
         console.log(response);
         headerView.render(response);
     });
-    var postView = new PostsView(document.getElementById('posts'));
-    FB.api('/Fredra.61/posts', { limit: 250 }, function (data) {
-        console.log('Response', data);
-        postView.render(data.data);
-    });
-    FB.api('/Fredra.61/photos', function (data) {
-        console.log('Response', data);
-    });
+    
+    var postView = new PostsView(document.getElementById('container'));
+    function loadData(method) {
+        method = method || 'events';
+        FB.api('/Fredra.61/' + method + '?limit=250', function (data) {
+            FB.api(data.paging.next, function (data2) {
+                var events = data.data.concat(data2.data).sort(function (a, b) {
+                    var aDate = new Date(a.start_time);
+                    var bDate = new Date(b.start_time);
+                    console.log(aDate, a.start_time);
+                    return bDate - aDate;
+                });
+                postView.render(events);
+            });
+        });
+    }
+
+    loadData();
+    document.querySelector('.events').addEventListener('click', function (evt) {
+        console.log(evt);
+        document.querySelector('.events a.active').className = '';
+        evt.target.className = 'active';
+        switch (evt.target.id) {
+            case 'events': loadData('events'); break;
+            case 'posts': loadData('posts'); break;
+            case 'feed': loadData('feed'); break;
+
+            default: loadData();
+        }
+    }, false);
 }

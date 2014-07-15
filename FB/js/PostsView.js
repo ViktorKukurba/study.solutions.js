@@ -8,18 +8,35 @@ function PostsView(container) {
         '<img src="{{picture}}"/>'+
         '<div class"message">{{message}}</div>' +
         '<div class"description">{{description}}</div>' +
+        '<div>' +
+        '{{#photos}}' +
+        '<img src="{{picture}}"/>' +
+        '{{/photos}}'+
+        '</div>'+
         '</section>'+
-        '<footer>{{created_time}}<footer></article>';
+        '<footer>{{start_time}}<footer></article>';
 
     this.render = function (data) {
-        var html = '';
+        container.innerHTML = '';
         if (data && data instanceof Array) {
-            data.forEach(function (value) {
+            data.forEach(function(item) {
+                var eventDiv = container.appendChild(document.createElement('DIV'));
+                eventDiv.id = item.id;
 
-                value.created_time = (new Date(value.created_time)).toLocaleDateString();
-                html += Mustache.render(TEMPLATE, value);
+                FB.api('/' + item.id, function(event) {
+                    FB.api('/' + item.id + '/picture', function(picture) {
+                        FB.api('/' + item.id + '/photos', function(photos) {
+                            event.start_time = (new Date(event.start_time)).toLocaleDateString();
+                            event.picture = picture.data.url;
+                            event.photos = photos.data;
+                            var html = '';
+                            html = Mustache.render(TEMPLATE, event);
+                            document.getElementById(item.id).innerHTML = html;
+                        });
+                    });
+                });
+
             });
-            container.innerHTML = html;
         }
     };
 }
@@ -34,7 +51,7 @@ function HeaderView(container) {
 
     this.render = function (data) {
         var html = Mustache.render(TEMPLATE, data);
-        document.getElementById('title').innerHTML =data.about;
+        document.getElementById('title').innerHTML = data.about;
         container.innerHTML = html;
     };
 }

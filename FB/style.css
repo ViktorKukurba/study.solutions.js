@@ -52,3 +52,8 @@ article img {
     text-align: center;
     font:italic bold 20px/35px Georgia, serif;
 }
+
+.events .active {
+    text-align: center;
+    font:italic bold 25px/40px Georgia, serif;
+}
