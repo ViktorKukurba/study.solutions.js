@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Fredra61</title>
+    <meta charset="UTF-8">
+    <script src="js/PostsView.js"></script>
+    <script src="js/fb-integration.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
+</head>
+    <body>
+        <div id="page-wrapper">
+            <header>
+                <!--
+                    Below we include the Login Button social plugin. This button uses
+                    the JavaScript SDK to present a graphical Login button that triggers
+                    the FB.login() function when clicked.
+                    -->
+                <div id="header">
+                    <div id="title"></div>
+                    <div id="login">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>
+                    </div>
+                    <hgroup id="header-title"></hgroup>
+                </div>
+                <div id="status">
+                </div>
+            </header>
+            <nav>
+                <div class="events">
+                    <a href="#" class="active" id="events">Події</a>
+                </div>
+            </nav>
+            <div id="content">
+            
+                <section id="container">
+                
+                </section>
+                <aside>
+                
+                </aside>
+            </div>
+        </div>
+    </body>
+</html>

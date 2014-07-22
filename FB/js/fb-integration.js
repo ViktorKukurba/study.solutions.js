@@ -34,6 +34,7 @@ function checkLoginState() {
 window.fbAsyncInit = function () {
     FB.init({
         appId: '380038068742752',
+        //appId: '237271143059295',//test
         cookie: true,  // enable cookies to allow the server to access
         // the session
         xfbml: true,  // parse social plugins on this page
@@ -74,7 +75,6 @@ function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     var headerView = new HeaderView(document.getElementById('header-title'));
     FB.api('/Fredra.61', function (response) {
-        console.log(response);
         headerView.render(response);
     });
     
@@ -86,7 +86,6 @@ function testAPI() {
                 var events = data.data.concat(data2.data).sort(function (a, b) {
                     var aDate = new Date(a.start_time);
                     var bDate = new Date(b.start_time);
-                    console.log(aDate, a.start_time);
                     return bDate - aDate;
                 });
                 postView.render(events);
@@ -96,7 +95,6 @@ function testAPI() {
 
     loadData();
     document.querySelector('.events').addEventListener('click', function (evt) {
-        console.log(evt);
         document.querySelector('.events a.active').className = '';
         evt.target.className = 'active';
         switch (evt.target.id) {
