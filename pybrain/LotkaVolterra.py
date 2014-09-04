@@ -7,11 +7,13 @@ c = 1.5
 d = 1.75
 def dX_dt(X, t=1):
 	""" Return the growth rate of fox and rabbit populations. """
-	return array([a*X[0] - b*X[0]*X[1] ,
-                  -c*X[1] + d*X[0]*X[1]])
+	#return array([a*X[0] - b*X[0]*X[1],
+    #             -c*X[1] + d*X[0]*X[1]])
+	return array([a*X[0] - b*X[0]*X[1] - 0.01*X[0]*X[0] ,
+ 	                  -c*X[1] + d*X[0]*X[1] -0.002*X[1]*X[1] ])
 
 from scipy import integrate
-t = linspace(1, 150,  1000)              # time
+t = linspace(1, 1500,  10000)              # time
 #print t
 
 X0 = array([3, 5])                     # initials conditions: [Victim, Predator]
@@ -29,3 +31,12 @@ p.xlabel('time')
 p.ylabel('population')
 p.title('Evolution of predator and victim population')
 f1.savefig('LotkaVolterra.png')
+
+f2 = p.figure()
+p.plot(foxes, rabbits, 'r-', label='Victim')
+p.grid()
+p.legend(loc='best')
+p.xlabel('Victim')
+p.ylabel('Predator')
+p.title('Evolution of predator and victim population')
+f2.savefig('LotkaVolterra2.png')

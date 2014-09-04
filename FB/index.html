@@ -39,5 +39,26 @@
             </aside>
         </div>
     </div>
+<script>
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function runApp() {
+        console.log('Welcome!  Fetching your information.... ');
+        var headerView = new HeaderView(document.getElementById('header-title'));
+        FB.api('/Fredra.61', function (response) {
+            console.log(response);
+            headerView.render(response);
+        });
+        var postView = new PostsView(document.getElementById('posts'));
+        FB.api('/Fredra.61/posts', { limit: 250 }, function (data) {
+            console.log('Response', data);
+            postView.render(data.data);
+        });
+        FB.api('/Fredra.61/photos', function (data) {
+            console.log('Response', data);
+        });
+    }
+    initializeFB(runApp);
+</script>
 </body>
 </html>

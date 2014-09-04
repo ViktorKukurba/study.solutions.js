@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Fredra61</title>
+    <meta charset="UTF-8">
+    <script src="js/SharesView.js"></script>
+    <script src="js/fb-integration.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.js"></script>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="page-wrapper">
+        <header>
+            <!--
+                Below we include the Login Button social plugin. This button uses
+                the JavaScript SDK to present a graphical Login button that triggers
+                the FB.login() function when clicked.
+                -->
+            <div id="header">
+                <div id="title"></div>
+                <div id="login">
+                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                    </fb:login-button>
+                </div>
+                <hgroup id="header-title"></hgroup>
+            </div>
+            <div id="status">
+            </div>
+        </header>
+        <nav>
+        </nav>
+        <div id="content">
+            <section id="posts">
+                
+            </section>
+            <aside>
+                
+            </aside>
+        </div>
+    </div>
+<script>
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function runApp() {
+        new SharesView(document.querySelector('#posts'));
+    }
+    initializeFB(runApp);
+</script>
+</body>
+</html>
