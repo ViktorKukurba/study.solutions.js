@@ -6,39 +6,39 @@
     <script src="js/PostsView.js"></script>
     <script src="js/fb-integration.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
-    <link href="style.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet"/>
 </head>
 <body>
-    <div id="page-wrapper">
-        <header>
-            <!--
-                Below we include the Login Button social plugin. This button uses
-                the JavaScript SDK to present a graphical Login button that triggers
-                the FB.login() function when clicked.
-                -->
-            <div id="header">
-                <div id="title"></div>
-                <div id="login">
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-                    </fb:login-button>
-                </div>
-                <hgroup id="header-title"></hgroup>
+<div id="page-wrapper">
+    <header>
+        <!--
+            Below we include the Login Button social plugin. This button uses
+            the JavaScript SDK to present a graphical Login button that triggers
+            the FB.login() function when clicked.
+            -->
+        <div id="header">
+            <div id="title"></div>
+            <div id="login">
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
             </div>
-            <div id="status">
-            </div>
-        </header>
-        <nav>
-        </nav>
-        <div id="content">
-            <div class="events">Події</div>
-            <section id="posts">
-                
-            </section>
-            <aside>
-                
-            </aside>
+            <hgroup id="header-title"></hgroup>
         </div>
+        <div id="status">
+        </div>
+    </header>
+    <nav>
+    </nav>
+    <div id="content">
+        <div class="events">Події</div>
+        <section id="posts">
+
+        </section>
+        <aside>
+
+        </aside>
     </div>
+</div>
 <script>
     // Here we run a very simple test of the Graph API after login is
     // successful.  See statusChangeCallback() for when this call is made.
@@ -46,17 +46,44 @@
         console.log('Welcome!  Fetching your information.... ');
         var headerView = new HeaderView(document.getElementById('header-title'));
         FB.api('/Fredra.61', function (response) {
-            console.log(response);
             headerView.render(response);
         });
-        var postView = new PostsView(document.getElementById('posts'));
-        FB.api('/Fredra.61/posts', { limit: 250 }, function (data) {
-            console.log('Response', data);
-            postView.render(data.data);
-        });
-        FB.api('/Fredra.61/photos', function (data) {
-            console.log('Response', data);
-        });
+
+        var postView = new PostsView(document.getElementById('container'));
+
+        function loadData(method) {
+            method = method || 'events';
+            FB.api('/Fredra.61/' + method + '?limit=250', function (data) {
+                FB.api(data.paging.next, function (data2) {
+                    var events = data.data.concat(data2.data).sort(function (a, b) {
+                        var aDate = new Date(a.start_time);
+                        var bDate = new Date(b.start_time);
+                        return bDate - aDate;
+                    });
+                    postView.render(events);
+                });
+            });
+        }
+
+        loadData();
+        document.querySelector('.events').addEventListener('click', function (evt) {
+            document.querySelector('.events a.active').className = '';
+            evt.target.className = 'active';
+            switch (evt.target.id) {
+                case 'events':
+                    loadData('events');
+                    break;
+                case 'posts':
+                    loadData('posts');
+                    break;
+                case 'feed':
+                    loadData('feed');
+                    break;
+
+                default:
+                    loadData();
+            }
+        }, false);
     }
     initializeFB(runApp);
 </script>

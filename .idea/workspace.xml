@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4f249d4-b7a0-4bdd-9437-2d0c11ce64fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pybrain/LotkaVolterra.png" afterPath="$PROJECT_DIR$/pybrain/LotkaVolterra.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pybrain/LotkaVolterra.py" afterPath="$PROJECT_DIR$/pybrain/LotkaVolterra.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FB/js/fb-integration.js" afterPath="$PROJECT_DIR$/FB/js/fb-integration.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FB/js/SharesView.js" afterPath="$PROJECT_DIR$/FB/js/SharesView.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FredraWeb/resources/js/fb-integration.js" afterPath="$PROJECT_DIR$/FredraWeb/resources/js/fb-integration.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FB/index.html" afterPath="$PROJECT_DIR$/FB/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="study.solutions.js.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,7 +30,18 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FB/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="32" selection-start="1856" selection-end="1861" vertical-scroll-proportion="-16.958334" vertical-offset="373" max-vertical-offset="1035">
+            <state vertical-scroll-proportion="-12.666667" vertical-offset="799" max-vertical-offset="1632">
+              <caret line="85" column="18" selection-start-line="85" selection-start-column="18" selection-end-line="85" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fb-integration.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/FredraWeb/resources/js/fb-integration.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-20.08" vertical-offset="722" max-vertical-offset="1326">
+              <caret line="72" column="70" selection-start-line="72" selection-start-column="70" selection-end-line="72" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -41,7 +50,8 @@
       <file leaf-file-name="shares.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FB/shares.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="26" selection-start="1176" selection-end="1176" vertical-scroll-proportion="-12.583333" vertical-offset="178" max-vertical-offset="840">
+            <state vertical-scroll-proportion="-3.8235295" vertical-offset="349" max-vertical-offset="952">
+              <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -50,7 +60,8 @@
       <file leaf-file-name="SharesView.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/FB/js/SharesView.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="75" selection-start="1733" selection-end="1733" vertical-scroll-proportion="0.83090377" vertical-offset="195" max-vertical-offset="1185">
+            <state vertical-scroll-proportion="0.6754967" vertical-offset="612" max-vertical-offset="1445">
+              <caret line="60" column="67" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -59,7 +70,8 @@
       <file leaf-file-name="PostsView.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FB/js/PostsView.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="38" selection-start="243" selection-end="250" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
+            <state vertical-scroll-proportion="-5.44" vertical-offset="0" max-vertical-offset="1105">
+              <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -68,7 +80,8 @@
       <file leaf-file-name="fb-integration.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FB/js/fb-integration.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="1" selection-start="2554" selection-end="2554" vertical-scroll-proportion="-41.53846" vertical-offset="0" max-vertical-offset="1170">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1326">
+              <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -77,7 +90,8 @@
       <file leaf-file-name="simpleRequest.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nodejs/simpleRequest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="17" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="225">
+            <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="255">
+              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -86,7 +100,8 @@
       <file leaf-file-name="LotkaVolterra.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pybrain/LotkaVolterra.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="22" selection-start="850" selection-end="850" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="705">
+            <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="799">
+              <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -95,16 +110,8 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d3/canvas/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="37" selection-start="715" selection-end="727" vertical-scroll-proportion="-18.75" vertical-offset="0" max-vertical-offset="690">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test-1.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phantomjs/test-1.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="15" selection-start="238" selection-end="238" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="210">
+            <state vertical-scroll-proportion="-10.0" vertical-offset="0" max-vertical-offset="782">
+              <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -113,7 +120,8 @@
       <file leaf-file-name="us2.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d3/json/us2.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="656849" selection-start="656849" selection-end="656849" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+              <caret line="0" column="656849" selection-start-line="0" selection-start-column="656849" selection-end-line="0" selection-end-column="656849" />
               <folding />
             </state>
           </provider>
@@ -175,17 +183,19 @@
         <option value="$PROJECT_DIR$/d3/zipLevel/zips_us_topo.json" />
         <option value="$PROJECT_DIR$/d3/canvas/index.html" />
         <option value="$PROJECT_DIR$/d3/zipLevel/index.html" />
-        <option value="$PROJECT_DIR$/FB/index.html" />
         <option value="$PROJECT_DIR$/FB/js/fb-integration.js" />
         <option value="$PROJECT_DIR$/FB/shares.html" />
+        <option value="$PROJECT_DIR$/FredraWeb/resources/js/fb-integration.js" />
+        <option value="$PROJECT_DIR$/FB/index.html" />
         <option value="$PROJECT_DIR$/FB/js/SharesView.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1440" />
-    <option name="height" value="806" />
+    <option name="x" value="54" />
+    <option name="y" value="-8" />
+    <option name="width" value="1320" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -201,7 +211,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -228,7 +238,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
+              <option name="myItemId" value="study.js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -238,11 +248,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
+              <option name="myItemId" value="study.js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="FB" />
+              <option name="myItemId" value="FredraWeb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -252,11 +262,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
+              <option name="myItemId" value="study.js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="FB" />
+              <option name="myItemId" value="FredraWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -270,29 +284,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
+              <option name="myItemId" value="study.js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
+              <option name="myItemId" value="FredraWeb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="zipLevel" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -302,15 +302,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="study.solutions.js" />
+              <option name="myItemId" value="study.js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas" />
+              <option name="myItemId" value="FB" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -343,14 +339,60 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="name" value="Dart" />
+      <option name="saveOutputToFile" value="false" />
+      <option name="showConsoleOnStdErr" value="false" />
+      <option name="showConsoleOnStdOut" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaScriptRunConfigurationType" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
       <method />
     </configuration>
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4f249d4-b7a0-4bdd-9437-2d0c11ce64fc" name="Default" comment="" />
+      <created>1409865428268</created>
+      <updated>1409865428268</updated>
+    </task>
+    <servers />
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="806" extended-state="6" />
+    <frame x="54" y="-8" width="1320" height="784" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -368,12 +410,15 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USERS">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
       <collection />
     </option>
   </component>
@@ -389,285 +434,371 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/js-constructions/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="42" selection-start="466" selection-end="466" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="345" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/patterns/singleton.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="40" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0" vertical-offset="383" max-vertical-offset="1275" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="383" max-vertical-offset="1275">
+          <caret line="67" column="40" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DOMCore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="469" column="15" selection-start="8105" selection-end="8105" vertical-scroll-proportion="0.3328336" vertical-offset="6813" max-vertical-offset="15840" />
+        <state vertical-scroll-proportion="0.3328336" vertical-offset="6813" max-vertical-offset="15840">
+          <caret line="469" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LightTable/scripts/light-table.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="46" selection-start="4471" selection-end="4471" vertical-scroll-proportion="0.0" vertical-offset="1336" max-vertical-offset="5625" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1336" max-vertical-offset="5625">
+          <caret line="117" column="46" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="9" selection-start="1623" selection-end="1623" vertical-scroll-proportion="0.33229813" vertical-offset="1376" max-vertical-offset="13785" />
+        <state vertical-scroll-proportion="0.33229813" vertical-offset="1376" max-vertical-offset="13785">
+          <caret line="106" column="9" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jquery.plugin/click_dblclick_slowdblclick.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="17" selection-start="346" selection-end="346" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="6" column="17" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hashNavigation/index.htm">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="24" selection-start="724" selection-end="724" vertical-scroll-proportion="0.38709676" vertical-offset="0" max-vertical-offset="620" />
+        <state vertical-scroll-proportion="0.38709676" vertical-offset="0" max-vertical-offset="620">
+          <caret line="16" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LightTable/scripts/compiled.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="654" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="654">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LightTable/tools/main_compiled.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="45" selection-start="850" selection-end="850" vertical-scroll-proportion="0.60559005" vertical-offset="0" max-vertical-offset="644" />
+        <state vertical-scroll-proportion="0.60559005" vertical-offset="0" max-vertical-offset="644">
+          <caret line="26" column="45" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hashNavigation/jquery-2.0.0.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="32670" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="32670">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hashNavigation/jquery-1.10.2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="28902" selection-start="93112" selection-end="93112" vertical-scroll-proportion="0.06880734" vertical-offset="0" max-vertical-offset="654" />
+        <state vertical-scroll-proportion="0.06880734" vertical-offset="0" max-vertical-offset="654">
+          <caret line="5" column="28902" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LightTable/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="93" selection-start="2122" selection-end="2122" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1125" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1125">
+          <caret line="41" column="93" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/js-constructions/prototype.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="13" selection-start="1216" selection-end="1216" vertical-scroll-proportion="0.0" vertical-offset="428" max-vertical-offset="1320" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="428" max-vertical-offset="1320">
+          <caret line="47" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/js/d3.v3.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="665" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="665">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css.study/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="20" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="683" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="683">
+          <caret line="0" column="20" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css.study/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="1" selection-start="4471" selection-end="4471" vertical-scroll-proportion="0.0" vertical-offset="1378" max-vertical-offset="2145" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1378" max-vertical-offset="2145">
+          <caret line="137" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/geoCounties.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="4" selection-start="321" selection-end="767" vertical-scroll-proportion="-12.5" vertical-offset="0" max-vertical-offset="615" />
+        <state vertical-scroll-proportion="-12.5" vertical-offset="0" max-vertical-offset="615">
+          <caret line="20" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/js-constructions/jsonp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="1" selection-start="1043" selection-end="1043" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="29" column="1" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/text.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="12" selection-start="3450" selection-end="3474" vertical-scroll-proportion="0.2353823" vertical-offset="1013" max-vertical-offset="1680" />
+        <state vertical-scroll-proportion="0.2353823" vertical-offset="1013" max-vertical-offset="1680">
+          <caret line="78" column="12" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/regexp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="14" selection-start="44" selection-end="44" vertical-scroll-proportion="0.066176474" vertical-offset="0" max-vertical-offset="680" />
+        <state vertical-scroll-proportion="0.066176474" vertical-offset="0" max-vertical-offset="680">
+          <caret line="3" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="15" selection-start="601" selection-end="601" vertical-scroll-proportion="0.625" vertical-offset="40" max-vertical-offset="720" />
+        <state vertical-scroll-proportion="0.625" vertical-offset="40" max-vertical-offset="720">
+          <caret line="31" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/json/usstates2.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="30" selection-start="30" selection-end="52336" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="165" />
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="165">
+          <caret line="0" column="30" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/YUI-ex/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="138" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="681" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="681">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/json/usstates.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="29" selection-start="29" selection-end="52019" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="300" />
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="300">
+          <caret line="0" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/states.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="31" selection-start="253" selection-end="256" vertical-scroll-proportion="0.0" vertical-offset="645" max-vertical-offset="1305" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="645" max-vertical-offset="1305">
+          <caret line="9" column="31" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/js/geochart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="18" selection-start="1977" selection-end="1982" vertical-scroll-proportion="0.0" vertical-offset="2542" max-vertical-offset="3210" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2542" max-vertical-offset="3210">
+          <caret line="60" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/zoomable2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="4" selection-start="3396" selection-end="3713" vertical-scroll-proportion="0.0" vertical-offset="1349" max-vertical-offset="1980" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1349" max-vertical-offset="1980">
+          <caret line="116" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/zoomable.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="28" selection-start="2122" selection-end="2122" vertical-scroll-proportion="0.0" vertical-offset="986" max-vertical-offset="1650" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="986" max-vertical-offset="1650">
+          <caret line="84" column="28" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/js-constructions/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="6" selection-start="354" selection-end="354" vertical-scroll-proportion="0.15625" vertical-offset="0" max-vertical-offset="672" />
+        <state vertical-scroll-proportion="0.15625" vertical-offset="0" max-vertical-offset="672">
+          <caret line="7" column="6" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/YUI-ex/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="4" selection-start="529" selection-end="529" vertical-scroll-proportion="0.3794643" vertical-offset="0" max-vertical-offset="1005" />
+        <state vertical-scroll-proportion="0.3794643" vertical-offset="0" max-vertical-offset="1005">
+          <caret line="17" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/js-constructions/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="307" selection-end="313" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+          <caret line="13" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/YUI-ex/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="3" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="12" column="3" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/json/uscounties.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90" />
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90">
+          <caret line="0" column="32" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/json/states-counties.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90" />
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantomjs/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="7" selection-start="621" selection-end="621" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="450">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="450">
+          <caret line="24" column="7" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/geotest1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="28" selection-start="1033" selection-end="1033" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="3000">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="3000">
+          <caret line="60" column="28" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FileReader/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="22" selection-start="1591" selection-end="1591" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1065">
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1065">
+          <caret line="49" column="22" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/json/us.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="745864" selection-start="745864" selection-end="745864" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="641" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="641">
+          <caret line="0" column="745864" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantomjs/test-2.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="2" selection-start="59" selection-end="59" vertical-scroll-proportion="0.042432815" vertical-offset="0" max-vertical-offset="707" />
+        <state vertical-scroll-proportion="0.042432815" vertical-offset="0" max-vertical-offset="707">
+          <caret line="2" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phantomjs/test-1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="15" selection-start="238" selection-end="238" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+        <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="238">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FileReader/saveFile.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="66" selection-start="136" selection-end="147" vertical-scroll-proportion="0.06364922" vertical-offset="0" max-vertical-offset="707" />
+        <state vertical-scroll-proportion="0.06364922" vertical-offset="0" max-vertical-offset="707">
+          <caret line="3" column="66" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/json/us2.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="656849" selection-start="656849" selection-end="656849" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="664">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
+          <caret line="0" column="656849" selection-start-line="0" selection-start-column="656849" selection-end-line="0" selection-end-column="656849" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nodejs/simpleRequest.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="17" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="255">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/zipLevel/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="60" selection-start="7347971" selection-end="7347972" vertical-scroll-proportion="0.61206895" vertical-offset="339" max-vertical-offset="1035">
+        <state vertical-scroll-proportion="0.61206895" vertical-offset="339" max-vertical-offset="1035">
+          <caret line="51" column="60" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pybrain/LotkaVolterra.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="22" selection-start="850" selection-end="850" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="705">
+        <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="799">
+          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FB/js/fb-integration.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="1" selection-start="2554" selection-end="2554" vertical-scroll-proportion="-41.53846" vertical-offset="0" max-vertical-offset="1170">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1326">
+          <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FB/shares.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="26" selection-start="1176" selection-end="1176" vertical-scroll-proportion="-12.583333" vertical-offset="178" max-vertical-offset="840">
+        <state vertical-scroll-proportion="-3.8235295" vertical-offset="349" max-vertical-offset="952">
+          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d3/canvas/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="37" selection-start="715" selection-end="727" vertical-scroll-proportion="-18.75" vertical-offset="0" max-vertical-offset="690">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FB/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="32" selection-start="1856" selection-end="1861" vertical-scroll-proportion="-16.958334" vertical-offset="373" max-vertical-offset="1035">
+        <state vertical-scroll-proportion="-10.0" vertical-offset="0" max-vertical-offset="782">
+          <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FB/js/PostsView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="38" selection-start="243" selection-end="250" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
+        <state vertical-scroll-proportion="-5.44" vertical-offset="0" max-vertical-offset="1105">
+          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FredraWeb/resources/js/fb-integration.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.08" vertical-offset="722" max-vertical-offset="1326">
+          <caret line="72" column="70" selection-start-line="72" selection-start-column="70" selection-end-line="72" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FB/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.666667" vertical-offset="799" max-vertical-offset="1632">
+          <caret line="85" column="18" selection-start-line="85" selection-start-column="18" selection-end-line="85" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FB/js/SharesView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="75" selection-start="1733" selection-end="1733" vertical-scroll-proportion="0.83090377" vertical-offset="195" max-vertical-offset="1185">
+        <state vertical-scroll-proportion="0.6754967" vertical-offset="612" max-vertical-offset="1445">
+          <caret line="60" column="67" selection-start-line="60" selection-start-column="67" selection-end-line="60" selection-end-column="67" />
           <folding />
         </state>
       </provider>

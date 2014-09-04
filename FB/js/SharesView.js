@@ -12,11 +12,12 @@ function SharesView(container) {
     '<label>Resource</label><select id="types">'+
     '<option value="posts">Posts</option>'+
     '<option value="events">Events</option>'+
+    '<option value="feed">Feed</option>'+
     '</select></div>'+
     '<div><button>Load</button></div>',
 
     LIST_TEMPLATE = '<select id="items-list">' +
-      '{{#.}}<option value="{{id}}">{{message}}</option>{{/.}}' +
+      '{{#.}}<option value="{{object_id}}">{{message}}</option>{{/.}}' +
       '</select>',
     SHARED_LIST = '<div id="shares"><ul>' +
       '{{#.}}<li value="{{id}}">{{name}}</li>{{/.}}' +
@@ -31,30 +32,35 @@ function SharesView(container) {
       var page =  $container.find('input[type=text]').val(),
         method = $container.find('#types').val();
 
-      FB.api('/'+ page + '/' + method, { limit: 250 }, function (responce) {
+      FB.api('/'+ page + '/' + method,{limit:250}, function (responce) {
         _list = responce.data.filter(function(item){
           return !!item.message;
         });
         console.log('Response', _list);
         $('#items-list').remove();
         $container.append(Mustache.render(LIST_TEMPLATE, _list));
+          for(var i=0; i<_list.length;i++){
+              FB.api('/'+ _list[i].object_id, function (responce) {
+                  console.log('Response', responce);
+              });
+          }
       });
 
     });
     $container.on('change', '#items-list', function(evt){
       $('#shares').remove();
       var val = $('#items-list').val();
-      var shares = _list.filter(function(item){
-        return item.id == val;
-      });
-      console.log('r', shares);
-      if(shares[0].to){
-        $container.append(Mustache.render(SHARED_LIST, shares[0].to.data));
-      }
-
-//      FB.api('/'+ $('#items-list').val() + '/sharedposts', function (responce) {
-//        console.log('Response', responce);
+//      var shares = _list.filter(function(item){
+//        return item.id == val;
 //      });
+//      console.log('r', shares);
+//      if(shares[0].to){
+//        $container.append(Mustache.render(SHARED_LIST, shares[0].to.data));
+//      }
+
+      FB.api('/'+$container.find('input[type=text]').val()+ '/posts'+ $('#items-list').val(), function (responce) {
+        console.log('Response', responce);
+      });
     });
   }
 

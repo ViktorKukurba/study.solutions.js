@@ -71,38 +71,3 @@ window.fbAsyncInit = function () {
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    var headerView = new HeaderView(document.getElementById('header-title'));
-    FB.api('/Fredra.61', function (response) {
-        headerView.render(response);
-    });
-    
-    var postView = new PostsView(document.getElementById('container'));
-    function loadData(method) {
-        method = method || 'events';
-        FB.api('/Fredra.61/' + method + '?limit=250', function (data) {
-            FB.api(data.paging.next, function (data2) {
-                var events = data.data.concat(data2.data).sort(function (a, b) {
-                    var aDate = new Date(a.start_time);
-                    var bDate = new Date(b.start_time);
-                    return bDate - aDate;
-                });
-                postView.render(events);
-            });
-        });
-    }
-
-    loadData();
-    document.querySelector('.events').addEventListener('click', function (evt) {
-        document.querySelector('.events a.active').className = '';
-        evt.target.className = 'active';
-        switch (evt.target.id) {
-            case 'events': loadData('events'); break;
-            case 'posts': loadData('posts'); break;
-            case 'feed': loadData('feed'); break;
-
-            default: loadData();
-        }
-    }, false);
-}
