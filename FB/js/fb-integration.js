@@ -1,6 +1,7 @@
 ﻿
-// This is called with the results from from FB.getLoginStatus().
-function statusChangeCallback(response) {
+function initializeFB(callback) {
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
     // The response object is returned with a status field that lets the
@@ -8,37 +9,38 @@ function statusChangeCallback(response) {
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
-        // Logged into your app and Facebook.
-        testAPI();
+      // Logged into your app and Facebook.
+      callback();
     } else if (response.status === 'not_authorized') {
-        // The person is logged into Facebook, but not your app.
-        document.getElementById('status').innerHTML = 'Please log ' +
-                'into this app.';
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
     } else {
-        // The person is not logged into Facebook, so we're not sure if
-        // they are logged into this app or not.
-        document.getElementById('status').innerHTML = 'Please log ' +
-                'into Facebook.';
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
     }
-}
+  }
 
 // This function is called when someone finishes with the Login
 // Button.  See the onlogin handler attached to it in the sample
 // code below.
-function checkLoginState() {
+  function checkLoginState() {
     FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
+      statusChangeCallback(response);
     });
-}
+  }
 
-window.fbAsyncInit = function () {
+  window.checkLoginState = checkLoginState;
+
+  window.fbAsyncInit = function () {
     FB.init({
-        appId: '380038068742752',
-        //appId: '237271143059295',//test
-        cookie: true,  // enable cookies to allow the server to access
-        // the session
-        xfbml: true,  // parse social plugins on this page
-        version: 'v2.0' // use version 2.0
+      appId: '237271143059295',
+      cookie: true,  // enable cookies to allow the server to access
+      // the session
+      xfbml: true,  // parse social plugins on this page
+      version: 'v2.0' // use version 2.0
     });
 
     // Now that we've initialized the JavaScript SDK, we call
@@ -55,54 +57,17 @@ window.fbAsyncInit = function () {
 
 
     FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
+      statusChangeCallback(response);
     });
 
-};
+  };
 
 // Load the SDK asynchronously
-(function (d, s, id) {
+  (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-// Here we run a very simple test of the Graph API after login is
-// successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    var headerView = new HeaderView(document.getElementById('header-title'));
-    FB.api('/Fredra.61', function (response) {
-        headerView.render(response);
-    });
-    
-    var postView = new PostsView(document.getElementById('container'));
-    function loadData(method) {
-        method = method || 'events';
-        FB.api('/Fredra.61/' + method + '?limit=250', function (data) {
-            FB.api(data.paging.next, function (data2) {
-                var events = data.data.concat(data2.data).sort(function (a, b) {
-                    var aDate = new Date(a.start_time);
-                    var bDate = new Date(b.start_time);
-                    return bDate - aDate;
-                });
-                postView.render(events);
-            });
-        });
-    }
-
-    loadData();
-    document.querySelector('.events').addEventListener('click', function (evt) {
-        document.querySelector('.events a.active').className = '';
-        evt.target.className = 'active';
-        switch (evt.target.id) {
-            case 'events': loadData('events'); break;
-            case 'posts': loadData('posts'); break;
-            case 'feed': loadData('feed'); break;
-
-            default: loadData();
-        }
-    }, false);
+  }(document, 'script', 'facebook-jssdk'));
 }

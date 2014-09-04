@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+    console.time('init');
+    var width = 960,
+            height = 500;
+
+    var projection = d3.geo.albers()
+            .scale(1000);
+
+    //var canvas = d3.select("body").append("canvas")
+    var canvas = d3.select(document.createElement('canvas'))
+            .attr("width", width)
+            .attr("height", height);
+
+    var context = canvas.node().getContext("2d");
+
+    var path = d3.geo.path()
+            .projection(projection)
+            .context(context);
+
+    console.timeEnd('init');
+
+    d3.json("../zipLevel/zips_us_topo.json", function(error, us) {
+        console.time('canvas');
+        path(topojson.feature(us, us.objects.zip_codes_for_the_usa));
+        context.stroke();
+        document.querySelector('body').appendChild(canvas[0][0]);
+        console.timeEnd('canvas');
+    });
+
+</script>
+</body>
+</html>
