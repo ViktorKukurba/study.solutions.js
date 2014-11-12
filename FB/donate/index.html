@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fredra61</title>
+    <meta charset="UTF-8">
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="page-wrapper">
+    <header>
+        <!--
+            Below we include the Login Button social plugin. This button uses
+            the JavaScript SDK to present a graphical Login button that triggers
+            the FB.login() function when clicked.
+            -->
+        <div id="header">
+            <div id="title">Fredra.61</div>
+        </div>
+        <div id="status">
+        </div>
+    </header>
+    <nav>
+    </nav>
+    <div id="content">
+        <section id="donation">
+            <header>
+                Платіж на виконання статутних зобовязань організації
+            </header>
+            <form action="https://api.privatbank.ua/p24api/ishop" method="POST" accept-charset="UTF-8">
+                <input type="text" name="amt" value="1"/>
+                <input type="hidden" name="ccy" value="UAH" />
+                <input type="hidden" name="merchant" value="75482" />
+                <input type="hidden" name="order" value="000TEST888" />
+                <input type="hidden" name="details" value="Платіж на виконання статутних зобовязань організації" />
+                <input type="hidden" name="ext_details" value="" />
+                <input type="hidden" name="pay_way" value="privat24" />
+                <input type="hidden" name="return_url" value="http://localhost:63342/FB/donate/index.html" />
+                <input type="hidden" name="server_url" value="" />
+                <input type="submit" value="Долучитися" />
+            </form>
+        </section>
+        <aside>
+
+        </aside>
+    </div>
+</div>
+</body>
+</html>

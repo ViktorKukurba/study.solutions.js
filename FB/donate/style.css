@@ -1,0 +1,81 @@
+﻿body {
+    background-color: #D3E6BE;
+}
+
+#page-wrapper {
+    margin: auto;
+    max-width: 960px;
+    min-height: 300px;
+    border-radius: 10px;
+    background-color: #A4C086;
+    padding: 10px;
+    margin-top: 50px;
+}
+#content {
+    border: #476A21 solid 2px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#donation form>*{
+    display: block;
+    margin: 10px auto;
+}
+
+header {
+    text-align: center;
+    color: #ffffff;
+}
+
+article {
+    padding: 10px;
+    margin: 5px;
+    clear: both;
+    border: #476A21 solid 2px;
+    border-radius: 10px;
+}
+article header {
+    text-align: center;
+}
+article footer {
+    text-align: right;
+}
+
+[type="submit"] {
+    width: 100px;
+    height: 50px;
+    border: #476A21 solid 2px;
+    border-radius: 10px;
+    background-color: #147C2F;
+    text-decoration-color: #ffffff;
+    display: block;
+    margin-top: 10px;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#header-title img {
+    border-radius: 10px;
+    width: 100%;
+    
+}
+#header {
+    padding: 10px;
+    border: #476A21 solid 2px;
+    border-radius: 10px;
+}
+article img {
+    text-align: center;
+    border-radius: 5px;
+}
+#login {
+    float: right;
+}
+#title {
+    text-align: center;
+    font:italic bold 20px/45px Georgia, serif;
+}
+
